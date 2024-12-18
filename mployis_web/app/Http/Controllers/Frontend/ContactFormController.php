@@ -32,13 +32,6 @@ class ContactFormController extends Controller
 
 
         if($contactForm) {
-            $toEmail="manish.chavan113@gmail.com";
-            $name=$contactForm->name
-            $from=$contactForm->email
-            $message=$contactForm->message;
-            $subject=$contactForm->subject;
-            Mail::to($toEmail)->send(new Email($name,$from,$message,$subject));
-
             return response()->json([
                 'status' => true,
                 'message' => 'Your message has been sent successfully!'

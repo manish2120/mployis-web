@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Frontend\MailController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\ContactFormController;
 use App\Http\Controllers\Frontend\Account\AccountController;
@@ -22,16 +21,14 @@ Route::get('/services', [PageController::class, 'showServicesPage'])->name('serv
 
 Route::post('/contact-us/submit', [ContactFormController::class, 'handleContactForm'])->name('contact.submit');
 
-Route::get('/send-mail', [MailController::class, 'sendEmail']);
-
 Route::prefix('account')->group(function () {
 
     Route::middleware('guest')->group(function() {
-        Route::get('/create-account', [AccountController::class, 'showCandidateSignUpPage'])->name('account.show-candidate-sign-up');
+        Route::get('/create-account', [PageController::class, 'showCandidateSignUpPage'])->name('account.show-candidate-sign-up');
 
         Route::post('/create-account', [AccountController::class, 'handleCandidateSignUp'])->name('account.candidate-sign-up');
 
-        Route::post('/sign-in', [AccountController::class, 'handleCandidateSignIn'])->name('account.candidate-sign-in');
+        Route::get('/sign-in', [PageController::class, 'showCandidateSignInPage'])->name('account.candidate-sign-in');
 
     });
 

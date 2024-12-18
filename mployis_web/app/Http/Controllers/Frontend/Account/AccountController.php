@@ -8,11 +8,6 @@ use App\Http\Controllers\Controller;
 
 class AccountController extends Controller
 {
-
-    public function showCandidateSignUpPage() {
-        return view('frontend.candidates.auth.sign_up', ['hideHeader' => true, 'hideFooter' => true]);
-    }
-
     public function handleCandidateSignUp(Request $request) {
         $allRequestedData = $request->all();
             $requestedData = array_map(function($value, $key) {
@@ -24,8 +19,9 @@ class AccountController extends Controller
             $validatedData = $request->validate([
                 'fname' => 'required|max:255',
                 'lname' => 'required|max:255',
-                'email' => 'required|email|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#]).+$/|unique:users,email',
+                'email' => 'required|email|regex:/^(?=.*[a-z])(?=.*[@$!%*?&#]).+$/|unique:users,email',
                 'password' => 'required|min:8|max:20|confirmed',
+                'password_confirmation' => 'required',
                 'toc' => 'required|accepted'
             ], [
                 'fname.required' => 'Please enter your first name',
@@ -42,15 +38,15 @@ class AccountController extends Controller
                 'password.confirmed' => 'Password do not match',
     
                 'toc.required' => 'You must agree to the Terms and Conditions',
+              
             ]);
     
+            $validatedData['password'] = bcrypt($validatedData['password']);
+
             $signUpFormData = User::create($validatedData);
     
             if($signUpFormData) {
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Your account has been created successfully!'
-                ]);
+                return redirect()->route('account.candidate-sign-in')->with('status', 'Your account has been created successfully!');
             } else {
                 return response()->json([
                     'status' => false,
@@ -60,7 +56,7 @@ class AccountController extends Controller
     }
 
     public function handleCandidateSignIn() {
-    //    
+        // 
     }
     
 }

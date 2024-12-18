@@ -95,14 +95,14 @@
                                 <!--begin::Input wrapper-->
                                 <div class="position-relative mb-3">
                                     <input class="form-control form-control-lg form-control-solid" type="password"
-                                        placeholder="" name="password" id="password" autocomplete="off" />
+                                    placeholder="" name="password" id="password" autocomplete="off" />
+                                    <div class="invalid-feedback"></div>
                                     <span
                                         class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
                                         data-kt-password-meter-control="visibility">
                                         <i class="bi bi-eye-slash fs-2"></i>
                                         <i class="bi bi-eye fs-2 d-none"></i>
                                     </span>
-                                    <div class="invalid-feedback"></div>
                                 </div>
                                 <!--end::Input wrapper-->
 
@@ -131,22 +131,21 @@
                         <div class="fv-row mb-5">
                             <label class="form-label fw-bolder text-dark fs-6">Confirm Password</label>
                             <input class="form-control form-control-lg form-control-solid" type="password"
-                                placeholder="" name="password_confirmation" id="password" value="" autocomplete="off" />
+                                placeholder="" name="password_confirmation" id="cpassword" value="" autocomplete="off" />
                             <div class="invalid-feedback"></div>
                         </div>
                         <!--end::Input group-->
 
                         <!--begin::Input group-->
                         <div class="fv-row mb-10">
-                            <label class="form-check form-check-custom form-check-solid form-check-inline">
+                            <label class="form-check form-check-custom form-check-solid form-check-inline" for="toc">
                                 <input class="form-check-input" type="checkbox" name="toc" id="toc"
                                     value="1" />
                                 <span class="form-check-label fw-bold text-gray-700 fs-6">I Agree
                                     <a href="#" class="ms-1 link-primary">Terms and conditions</a>.</span>
-                                <div>
-                                </div>
-                            </label>
-                            <div class="invalid-feedback"></div>
+                                </label>
+
+                                <div class="invalid-feedback"></div>
                         </div>
                         <!--end::Input group-->
 
@@ -162,7 +161,7 @@
                         
                         <div class="text-center mt-5">
                             <span class="text-gray-400 fw-bold">Already Register? Login (
-                                <a href="">Student</a> / 
+                                <a href="{{ route('account.show-candidate-sign-up') }}">Student</a> / 
                                 <a href="">Company</a>
                                 )
                             </span>
@@ -177,9 +176,9 @@
             <!--begin:Links-->
             <div class="d-flex flex-center flex-column-auto p-10">
                 <div class="d-flex align-items-center fw-bold fs-6">
-                    <a href="" class="text-muted text-hover-primary px-2">Home</a>
-                    <a href="" class="text-muted text-hover-primary px-2">About</a>
-                    <a href="" class="text-muted text-hover-primary px-2">Contact Us</a>
+                    <a href="{{ route('home') }}" class="text-muted text-hover-primary px-2">Home</a>
+                    <a href="{{ route('about') }}" class="text-muted text-hover-primary px-2">About</a>
+                    <a href="{{ route('contact') }}" class="text-muted text-hover-primary px-2">Contact Us</a>
                 </div>
             </div>
             <!--end::Links-->
@@ -223,8 +222,9 @@
                 url: "{{ route('account.candidate-sign-up') }}",
                 type: 'POST',
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content');
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
+                data: $(this).serialize(),
                 dataType: 'json',
                 success: function(response) {
                     clearTimeout(messageTimeout);
@@ -240,13 +240,19 @@
                     } else if(xhr.status === 422) {
                         const errors = xhr.responseJSON?.errors;
                         if(errors) {
-                            $('input, textarea').each(function() {
+                            $('input').each(function() {
                                 const fieldName = $(this).attr('name');
                                 if(errors[fieldName]) {
                                     $(this).addClass('is-invalid');
-                                    $(this).attr('name').next('.invalid-feedback').html(errors[fieldName][0]);
+                                    $(this).next('.invalid-feedback').html(errors[fieldName][0]);
                                 }
                             });
+
+                            if (errors['toc']) {
+                                $('#toc').addClass('is-invalid');
+                                $('#toc').closest('.fv-row').find('.invalid-feedback').html(errors['toc'][0]).show();
+                            }
+
                         }
                     } else {
                         displayStatus();

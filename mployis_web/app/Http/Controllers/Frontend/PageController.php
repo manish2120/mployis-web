@@ -26,4 +26,14 @@ class PageController extends Controller
     public function showContactPage() {
         return view('frontend.public.contact');
     }
+
+    // --------------------
+    public function showCandidateSignUpPage() {
+        return view('frontend.candidates.auth.sign_up', ['hideHeader' => true, 'hideFooter' => true]);
+    }
+    
+    public function showCandidateSignInPage() {
+        return view('frontend.candidates.auth.sign_in', ['hideHeader' => true, 'hideFooter' => true]);
+       }
+   
 }
