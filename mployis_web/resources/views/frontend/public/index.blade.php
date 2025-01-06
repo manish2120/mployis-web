@@ -6,6 +6,11 @@
 <div class="d-flex flex-column flex-root">
 	<!--begin::Header Section-->
 	<div class="mb-0" id="home">
+		@if(session('status'))
+		<div class="alert alert-success fw-bold fs-5">
+			{{ session('status') }}
+		</div>
+		@endif
 		<!--begin::Wrapper-->
 		<div class="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg" style="background-image: url(assets/media/svg/illustrations/landing.svg)">
 			
