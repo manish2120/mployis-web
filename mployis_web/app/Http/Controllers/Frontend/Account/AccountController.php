@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Frontend\Account;
 
-use App\Models\User;
+use App\Models\Auth\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
@@ -21,7 +23,7 @@ class AccountController extends Controller
                 'lname' => 'required|max:255',
                 'email' => 'required|email|regex:/^(?=.*[a-z])(?=.*[@$!%*?&#]).+$/|unique:users,email',
                 'password' => 'required|min:8|max:20|confirmed',
-                'password_confirmation' => 'required',
+                'password_confirmation' => 'required|same:password',
                 'toc' => 'required|accepted'
             ], [
                 'fname.required' => 'Please enter your first name',
@@ -35,18 +37,26 @@ class AccountController extends Controller
                 'password.required' => 'Please enter a password',
                 'password.min' => 'Password must be at least 8 characters long',
                 'password.max' => 'Password must not exceed 20 characters',
-                'password.confirmed' => 'Password do not match',
     
                 'toc.required' => 'You must agree to the Terms and Conditions',
               
             ]);
+
     
             $validatedData['password'] = bcrypt($validatedData['password']);
 
             $signUpFormData = User::create($validatedData);
     
             if($signUpFormData) {
-                return redirect()->route('account.candidate-sign-in')->with('status', 'Your account has been created successfully!');
+                // condition to perform page redirection with ajax
+                if($request->ajax()) {
+                    session()->flash('status', 'Your account has been created successfully!');
+                    return response()->json([
+                        'status' => true, 
+                        'message' => 'Your account has been created successfully!', 
+                        'redirect' => route('account.candidate-sign-in')
+                    ]);
+                }
             } else {
                 return response()->json([
                     'status' => false,
@@ -55,8 +65,72 @@ class AccountController extends Controller
         }
     }
 
-    public function handleCandidateSignIn() {
-        // 
+    public function handleCandidateSignIn(Request $request) {
+        $validatedData = $request->validate([
+            'email' => 'required|email|regex:/^(?=.*[a-z])(?=.*[@$!%*?&#]).+$/'
+        ], [
+            'email.required' => 'Email is required',
+            'email.regex' => 'Please enter a valid email address (e.g. example@gmail.com)'
+        ]);
+
+        $candidate = User::where('email', $request->email)->first(); // Get first matching email
+
+        // Check candidate exists
+        if($candidate) {
+            return response()->json([
+                'status' => true,
+                'redirectURL' => route('account.candidate.password', ['id' => $candidate->id])
+            ]);
+        } else {
+            session(['email' => $request->email]);
+            return response()->json([
+                'status' => false,
+                'redirectURL' => route('account.show-candidate-sign-up'),
+            ]);
+        }
+    }
+
+    function handleCandidateSignInPassword(Request $request, $id) {
+
+        // Validate password
+        $validatedData = $request->validate([
+            'password' => 'required'
+        ], [
+            'password.required' => 'Password is required'
+        ]);
+
+        $password = $request->password;
+        $data = User::where('id', $id)->first(); // Get first matching candidate
+
+        // Check the email and password is authenticated
+        $session = Auth::guard('candidate')->attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ]);
+
+        // Redirect if candidate is authenticated
+        if($validatedData && $session) {
+            session()->flash('status', 'Logged In Successfully!');
+            return response()->json([
+                'status' => true,
+                'redirectURL' => route('home', ['id' => $data->id])
+            ]);
+        } else {
+            return response()->json([
+                'status' => false
+            ]);
+        }
+    }
+
+    // Handle candidate sign out
+    public function handleCandidateSignOut(Request $request) {
+        $logout = Auth::guard('candidate')->logout(); // Clears the current logged in session.
+
+        $request->session()->invalidate(); // Removes all the session variables if its exists
+
+        $request->session()->regenerateToken(); // Regenerates a new fresh CSRF token for a user.
+
+        return redirect()->route('home')->with('status', 'You have been logged out successfully!');
     }
     
 }
