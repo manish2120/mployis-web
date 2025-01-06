@@ -23,6 +23,8 @@
                     <!--begin::Form-->
                     <form class="form w-100" novalidate="novalidate" id="candidateSignUpForm">
                         @csrf
+
+                        <input type="hidden" name="role" value="candidate">
                         <!--begin::Heading-->
                         <div class="mb-10 text-center">
                             <!--begin::Title-->
@@ -30,7 +32,7 @@
                             <!--end::Title-->
                             <!--begin::Link-->
                             <div class="text-gray-400 fw-bold fs-4">Already have an account?
-                                <a href="" class="link-primary fw-bolder">Sign in here</a>
+                                <a href="{{ route('account.candidate-sign-in') }}" class="link-primary fw-bolder">Sign in here</a>
                             </div>
                             <!--end::Link-->
                         </div>
@@ -77,7 +79,7 @@
                         <div class="fv-row mb-7">
                             <label class="form-label fw-bolder text-dark fs-6">Email</label>
                             <input class="form-control form-control-lg form-control-solid" type="email" placeholder=""
-                                name="email" id="email" value="" autocomplete="off" />
+                                name="email" id="email" value="{{ session('email') }}" autocomplete="off" />
                             <div class="invalid-feedback"></div>
                         </div>
                         <!--end::Input group-->
@@ -214,6 +216,19 @@
 <script>
     
     $(document).ready(function() {
+     
+        // Begins::Handles inputs trailing and leading spaces
+        const inputs = ['fname', 'lname', 'email']
+        $(inputs).each(function() {
+            const input = '#' + this;
+            $(input).on('input', function() {
+                this.value = this.value.trim();
+            });
+        });
+        // Ends::Handles inputs trailing and leading spaces
+
+       
+        // Begins::Handles Form Submission
         $('#candidateSignUpForm').on('submit', function(event) {
             event.preventDefault();
 
@@ -229,16 +244,20 @@
                 success: function(response) {
                     clearTimeout(messageTimeout);
                     if(response.status) {
+                        console.log('success');
+
                         clearErrors();
-                        displayStatus(response.status);
+                        // displayStatus(response.status);
+                        sessionStorage.setItem('status', response.message);
+                        window.location.href = response.redirect;
                     }
                 },
                 error: function(xhr, response) {
                     if(response.status === false) {
-                        clearErrors();
                         displayStatus(response.status);
                     } else if(xhr.status === 422) {
-                        const errors = xhr.responseJSON?.errors;
+                        clearErrors(); // Clear previous errors
+                        const errors = xhr.responseJSON?.errors; // Display if errors exists
                         if(errors) {
                             $('input').each(function() {
                                 const fieldName = $(this).attr('name');
@@ -254,12 +273,11 @@
                             }
 
                         }
-                    } else {
-                        displayStatus();
                     }
                 }
             });
         });
+        // Ends::Handles Form Submission
 
         // Function to clear previous error messages
         function clearErrors() {

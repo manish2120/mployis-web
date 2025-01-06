@@ -6,7 +6,13 @@
 <div class="d-flex flex-column flex-root">
 
 	<!--begin::Authentication - Sign-in -->
-	<div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url(assets/media/illustrations/sketchy-1/14.png">
+	<div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url('{{ asset('assets/media/illustrations/sketchy-1/14.png') }}')">
+
+		@if (session('status'))
+			<div class="alert alert-success text-center fw-bold fs-5">
+				{{ session('status') }}
+			</div>
+			@endif
 
 		<!--begin::Content-->
 		<div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
@@ -18,16 +24,10 @@
 			<!--end::Logo-->
 			
 			<!--begin::Wrapper-->
-			@if (session('status'))
-			<div class="alert alert-success text-center fw-bold fs-5">
-				{{ session('status') }}
-			</div>
-			@endif
-
 			<div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
 
 				<!--begin::Form-->
-				<form class="form w-100" method="POST" action="" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="../../demo1/dist/index.html">
+				<form class="form w-100" novalidate="novalidate" id="signInForm" data-kt-redirect-url="../../demo1/dist/index.html">
 					@csrf
 					
 					<!--begin::Heading-->
@@ -37,7 +37,7 @@
 						<!--end::Title-->
 						<!--begin::Link-->
 						<div class="text-gray-400 fw-bold fs-4">New Here?
-						<a href="" class="link-primary fw-bolder">Create an Account</a>
+						<a href="{{ route('account.show-candidate-sign-up') }}" class="link-primary fw-bolder">Create an Account</a>
 						</div>
 						<!--end::Link-->
 					</div>
@@ -50,10 +50,9 @@
 						<!--end::Label-->
 						<!--begin::Input-->
 						<input class="form-control form-control-lg form-control-solid" type="text" name="email" value="" autocomplete="off" />
+						
+						<div class="invalid-feedback"></div>
 						<!--end::Input-->
-						@error('email')
-						<div class="text-danger"></div>
-						@enderror
 					</div>
 					<!--end::Input group-->
 				
@@ -117,5 +116,46 @@
 	<!--end::Authentication - Sign-in-->
 
 </div>
+
+@push('custom_scripts')
+<script>
+	$(document).ready(function() {
+		$('#signInForm').on('submit', function(e) {
+			e.preventDefault();
+
+			$.ajax({
+				url: "{{ url('account/sign-in/email') }}",
+				type: 'POST',
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				data: $(this).serialize(), // Gets data in an array format
+				dataType: 'json',
+				success: function(response, email) {
+					// clearTimeout();
+					if(response.status) {
+						window.location.href = response.redirectURL;
+					} else {
+						window.location.href = response.redirectURL;
+					}
+				},
+				error: function(xhr, response) {
+					if(xhr.status === 422) {
+						const errors = xhr.responseJSON?.errors;
+						$('input').each(function() {
+							const fieldName = $(this).attr('name');
+							if(errors[fieldName]) {
+								$(this).addClass('is-invalid');
+								$(this).next('.invalid-feedback').text(errors[fieldName][0]);
+							}
+						});
+					}
+				}
+			});
+		});
+	
+	});
+</script>
+@endpush
 @endsection
 <!--end::Main-->
