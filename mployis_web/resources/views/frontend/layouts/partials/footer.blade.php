@@ -7,7 +7,7 @@
     </div>
     <!--end::Curve top-->
     <!--begin::Wrapper-->
-    <div class="landing-dark-bg pt-20">
+    <div class="landing-dark-bg">
         <!--begin::Container-->
         <div class="container">
             <!--begin::Row-->

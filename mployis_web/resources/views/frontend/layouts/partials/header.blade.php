@@ -180,7 +180,7 @@
 </style> --}}
 
 <!--begin::Header-->
-<div class="landing-header">
+<div class="landing-header min-h-[150px]">
     <!--begin::Container-->
     <div class="container">
         <!--begin::Wrapper-->
@@ -224,17 +224,24 @@
                     <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="{{ url('/services') }}">Services</a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="{{ url('/contact-us') }}">Contact</a>
+                    <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="{{ url('contact-us') }}">Contact</a>
                 </div>
 
-                {{-- <div class="menu-item dropdown">
+                <div class="menu-item dropdown">
                     <div class="menu-link nav-link py-3 px-4 px-xxl-6 dropdown-toggle" href="#" id="jobBoardsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class='far fa-bell fs-1'></i>
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="jobBoardsDropdown" style="min-width: 20rem;">
                         <li>
-                        <div class="d-flex flex-aligns-center pe-10 pe-lg-20" style="padding:10px">
-                            <!--begin::Icon-->
+                        <div class="d-flex flex-aligns-center pe-10 pe-lg-20 flex-column" style="padding:10px">
+                            @if(!Auth::guard('candidate')->check())
+                                <p>Looks like you're not logged in. Please sign in to check your notification.</p>
+                                <a href="{{ route('account.candidate-sign-in') }}">Sign In</a>
+                            @elseif(Auth::guard('candidate')->check())
+                            <p>You don't have any notifications at this moment.</p>
+                            {{-- @elseif(Auth::guard('candidate')->check() && ) --}}
+                            @endif
+                            {{-- <!--begin::Icon-->
                             <img alt="" class="w-30px me-3" src="{{ asset('frontend/assets/media/svg/files/pdf.svg') }}">
                             <!--end::Icon-->
                             <!--begin::Info-->
@@ -242,36 +249,36 @@
                                 <span class="fw-bolder fs-5 mb-0">Dark Mode</span><br>
                                 <span class="fw-bold fs-base text-muted">Dark Mode Setup for Layout &amp; Components</span>
                             </div>
-                            <!--begin::Info-->
+                            <!--begin::Info--> --}}
                         </div>
                         </li>
                         <li>
                         <div class="d-flex flex-aligns-center pe-10 pe-lg-20" style="padding:10px">
                             <!--begin::Icon-->
-                            <img alt="" class="w-30px me-3" src="{{ asset('frontend/assets/media/svg/files/pdf.svg') }}">
+                            {{-- <img alt="" class="w-30px me-3" src="{{ asset('frontend/assets/media/svg/files/pdf.svg') }}">
                             <!--end::Icon-->
                             <!--begin::Info-->
                             <div class="ms-1 fw-bold">
                                 <span class="fw-bolder fs-5 mb-0">Dark Mode</span>
                                 <span class="fw-bold fs-base text-muted">Dark Mode Setup for Layout &amp; Components</span>
-                            </div>
+                            </div> --}}
                             <!--begin::Info-->
                         </div>
                         </li>
                     </ul>
-                </div> --}}
+                </div>
 
                     {{-- ------------------------------- --}}
 
-            <div class="icon bg-transparent mx-auto px-3" id="bell">
+                    {{-- <div class="icon bg-transparent mx-auto px-3" id="bell">
                     <i class='far fa-bell fs-1'></i>
-                </div>
+                </div> --}}
 
                 <a href="" class="notifications" id="box">
 
-                    {{-- Keep comment still now --}}
+                    {{-- Keep comment for now --}}
                     {{-- <h2>Notifications - <span>{{ isset($userNotifications) && $userNotifications->isNotEmpty() ? count($userNotifications) : 0 }}</span></h2> <!-- Display the count of notifications --> --}}
-                    {{-- Keep comment still now --}}
+                    {{-- Keep comment for now --}}
                     
                     <div class="notifications-item"> 
                         <img src="https://i.imgur.com/uIgDDDd.jpg" alt="img">
@@ -320,7 +327,16 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                       
-                            <li><a class="dropdown-item" href="{{ route('account.candidate-sign-up') }}">Sign Up</a></li>
+                            @if(!Auth::guard('candidate')->check())
+                            <li><a class="dropdown-item" href="{{ route('account.candidate-sign-in') }}">Sign in</a></li>
+                            @endif
+                            
+                            @if(Auth::guard('candidate')->check())
+                            <li><a class="dropdown-item" href="{{ route('account.candidate.profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item" href="">Applications Status</a></li>
+                            <li><a class="dropdown-item text-danger" href="{{ route('auth.candidate-sign-out') }}">Sign Out</a></li>
+                            @endif
+
                         {{-- @if(Auth::guard('company')->check())
                             <!-- If the company is logged in -->
                             <li><a class="dropdown-item" href="{{ route('company-profile') }}">Profile</a></li>

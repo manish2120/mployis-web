@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('candidates_work_experience', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('candidates_id')->constrained('candidates_data');
+            $table->foreignId('candidates_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('job_title');
             $table->string('employee_type');
             $table->string('company_name');
             $table->string('location_type');
             $table->string('start_date');
-            $table->string('end_date');
             $table->string('is_currently_working');
             $table->timestamps();
         });

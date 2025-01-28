@@ -37,7 +37,7 @@
 </head>
 <!--end::Head-->
 
-<body id="kt_body" class="bg-body">
+<body id="kt_body" class="bg-body mt-0 pt-[100px]">
 
   @if(!isset($hideHeader) || !$hideHeader)
   @include('frontend.layouts.partials.header')

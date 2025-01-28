@@ -19,8 +19,7 @@ class RedirectIfNotAuthenticated
         if(!Auth::guard('candidate')->check()) {
             // return redirect()->route('home');
             return $next($request);
-        } else {
-            abort(401);
-        }
+        } 
+            return abort(401);
     }
 }

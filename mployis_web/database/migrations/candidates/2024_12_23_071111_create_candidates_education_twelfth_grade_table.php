@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('candidates_education_twelfth_grade', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('candidates_id')->constrained('candidates_data');
+            $table->foreignId('candidates_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('college_name');
             $table->string('board_name');
             $table->string('grade_or_percentage');
             $table->string('year_of_passing');
-            $table->string('passing_certificate');
+            $table->string('passing_certificate')->nullable();
             $table->timestamps();
         });
     }

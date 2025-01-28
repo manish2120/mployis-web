@@ -7,7 +7,7 @@
 	<!--begin::Header Section-->
 	<div class="mb-0" id="home">
 		@if(session('status'))
-		<div class="alert alert-success fw-bold fs-5">
+		<div class="alert alert-success fw-bold fs-5 absolute top-50">
 			{{ session('status') }}
 		</div>
 		@endif
@@ -15,7 +15,7 @@
 		<div class="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg" style="background-image: url(assets/media/svg/illustrations/landing.svg)">
 			
 			<!--begin::Landing hero-->
-			<div class="d-flex flex-column flex-center w-100 min-h-350px min-h-lg-500px px-9">
+			<div class="d-flex flex-column flex-center w-100 min-h-[200px] px-9">
 				<!--begin::Heading-->
 				<div class="text-center mb-5 mb-lg-10 py-10 py-lg-20">
 					<!--begin::Title-->
@@ -96,7 +96,7 @@
 		<!--begin::Container-->
 		<div class="container">
 			<!--begin::Heading-->
-			<div class="text-center mb-17">
+			<div class="text-center mb-17 pt-15">
 				<!--begin::Title-->
 				<h3 class="fs-2hx text-dark mb-5" id="how-it-works" data-kt-scroll-offset="{default: 100, lg: 150}">"Connecting Talent with Opportunity"</h3>
 				<!--end::Title-->

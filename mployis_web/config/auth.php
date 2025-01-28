@@ -41,9 +41,14 @@ return [
             'provider' => 'users',
         ],
 
+        'candidate' => [
+            'driver' => 'session',
+            'provider' => 'users'
+        ],
+
         'company' => [
             'driver' => 'session',
-            'provider' => 'companies',
+            'provider' => 'users',
         ],
     ],
 
@@ -67,13 +72,18 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => env('AUTH_MODEL', App\Models\Auth\User::class),
         ],
 
-        'companies' => [
-            'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', Appl\Models\Frontend\Company::class),
-        ]
+        // 'candidates' => [
+        //     'driver' => 'eloquent',
+        //     'model' => env('AUTH_MODEL', App\Models\Frontend\Auth\Candidate::class),
+        // ],
+
+        // 'companies' => [
+        //     'driver' => 'eloquent',
+        //     'model' => env('AUTH_MODEL', App\Models\Frontend\Auth\Company::class),
+        // ]
 
         // 'users' => [
         //     'driver' => 'database',

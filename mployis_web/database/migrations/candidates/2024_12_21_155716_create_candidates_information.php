@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('candidates_profile', function (Blueprint $table) {
+        Schema::create('candidates_information', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('candidates_id')->constrained('candidates_data')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('profile_picture');
+            $table->foreignId('candidates_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade')->nullable();
+            $table->string('profile_picture')->nullable();
             $table->string('fname');
             $table->string('lname');
             $table->string('email')->unique();
-            $table->enum('gender', ['male', 'female', 'other'])->nullable;
-            $table->string('country');
-            $table->string('state');
-            $table->string('district');
+            $table->enum('gender', ['male', 'female', 'other']);
+            $table->string('country')->nullable();
+            $table->string('state')->nullable();
+            $table->string('district')->nullable();
             $table->string('phone_no')->unique();
             $table->string('pincode');
-            $table->text('address');
+            $table->text('address')->nullable();
             $table->date('date_of_birth');
             $table->timestamps();
         });
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('candidates_profile');
+        Schema::dropIfExists('candidates_information');
     }
 };

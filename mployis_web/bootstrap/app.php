@@ -16,8 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'candidate_auth' => RedirectIfNotAuthenticated::class,
-            'candidate_id' => PassUserId::class,
             'candidate_page_auth' => RedirectIfAuthenticated::class,
+            'candidate_id' => PassUserId::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
