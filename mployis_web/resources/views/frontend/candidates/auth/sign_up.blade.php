@@ -6,8 +6,7 @@
 
     <div class="d-flex flex-column flex-root">
         <!--begin::Authentication - Sign-up -->
-        <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed"
-            style="background-image: url(assets/media/illustrations/sketchy-1/14.png">
+        <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed"style="background-image: url(assets/media/illustrations/sketchy-1/14.png">
 
             <!--begin::Content-->
             <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
@@ -28,7 +27,7 @@
                         <!--begin::Heading-->
                         <div class="mb-10 text-center">
                             <!--begin::Title-->
-                            <h1 class="text-dark mb-3">Create an Account</h1>
+                            <h1 class="text-dark mb-3">Create a Student Account</h1>
                             <!--end::Title-->
                             <!--begin::Link-->
                             <div class="text-gray-400 fw-bold fs-4">Already have an account?
@@ -163,8 +162,8 @@
                         
                         <div class="text-center mt-5">
                             <span class="text-gray-400 fw-bold">Already Register? Login (
-                                <a href="{{ route('account.show-candidate-sign-up') }}">Student</a> / 
-                                <a href="">Company</a>
+                                <a href="{{ route('account.candidate-sign-in') }}">Student</a> / 
+                                <a href="{{ route('account.company.sign-up') }}">Company</a>
                                 )
                             </span>
                         </div>
@@ -305,5 +304,3 @@
 @endpush
 
 <!--end::Body-->
-
-</html>

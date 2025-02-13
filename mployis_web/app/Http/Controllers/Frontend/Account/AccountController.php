@@ -42,7 +42,6 @@ class AccountController extends Controller
               
             ]);
 
-    
             $validatedData['password'] = bcrypt($validatedData['password']);
 
             $signUpFormData = User::create($validatedData);
@@ -67,16 +66,27 @@ class AccountController extends Controller
 
     public function handleCandidateSignIn(Request $request) {
         $validatedData = $request->validate([
-            'email' => 'required|email|regex:/^(?=.*[a-z])(?=.*[@$!%*?&#]).+$/'
+            'email' => [
+                'required',
+                'email',
+                'regex:/^(?=.*[a-z])(?=.*[@$!%*?&#]).+$/',
+                function ($attribute, $value, $fail) use ($request) {
+                    // Check if the email is associated with a company
+                    $user = User::where('email', $value)->first();
+                    
+                    if ($user && $user->user_type === 'company') {
+                        // Custom error message if user_type is company
+                        $fail('This email is associated with a company account. Please log in as an employer.');
+                    }
+                }
+            ],
         ], [
             'email.required' => 'Email is required',
-            'email.regex' => 'Please enter a valid email address (e.g. example@gmail.com)'
+            'email.regex' => 'Please enter a valid email address (e.g. example@gmail.com)',
         ]);
-
-        $candidate = User::where('email', $request->email)->first(); // Get first matching email
-
-        // Check candidate exists
-        if($candidate) {
+    
+        $candidate = User::where('email', $request->email)->first();
+        if ($candidate) {
             return response()->json([
                 'status' => true,
                 'redirectURL' => route('account.candidate.password', ['id' => $candidate->id])
@@ -85,10 +95,11 @@ class AccountController extends Controller
             session(['email' => $request->email]);
             return response()->json([
                 'status' => false,
-                'redirectURL' => route('account.show-candidate-sign-up'),
+                'redirectURL' => route('account.show-candidate-sign-up')
             ]);
         }
     }
+    
 
     function handleCandidateSignInPassword(Request $request, $id) {
 

@@ -9,7 +9,7 @@
 	<div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url('{{ asset('assets/media/illustrations/sketchy-1/14.png') }}')">
 
 		@if (session('status'))
-			<div class="alert alert-success text-center fw-bold fs-5">
+			<div class="alert-success fw-bold fs-5 p-1 absolute top-10 left-2/4 translate-x-[-50%] rounded-lg px-4 py-3">
 				{{ session('status') }}
 			</div>
 			@endif
@@ -33,11 +33,11 @@
 					<!--begin::Heading-->
 					<div class="text-center mb-10">
 						<!--begin::Title-->
-						<h1 class="text-dark mb-3">Sign In to MPLOYIS</h1>
+						<h1 class="text-dark mb-3">Sign In to Student</h1>
 						<!--end::Title-->
 						<!--begin::Link-->
 						<div class="text-gray-400 fw-bold fs-4">New Here?
-						<a href="{{ route('account.show-candidate-sign-up') }}" class="link-primary fw-bolder">Create an Account</a>
+						<a href="{{ route('account.show-candidate-sign-up') }}" class="link-primary fw-bolder">Create a Account for Student</a>
 						</div>
 						<!--end::Link-->
 					</div>
@@ -45,6 +45,7 @@
 
 					<!--begin::Input group-->
 					<div class="fv-row mb-10">
+						<input type="hidden" name="role" value="candidate">
 						<!--begin::Label-->
 						<label class="form-label fs-6 fw-bolder text-dark">Email</label>
 						<!--end::Label-->
@@ -87,9 +88,9 @@
 					<!--end::Actions-->
 
 					<div class="text-center">
-            <span class="text-gray-400 fw-bold">Already Register? Login (
+            <span class="text-gray-400 fw-bold">New to MPLOYIS ? Register (
               <a href="{{ route('account.show-candidate-sign-up') }}">Student</a> / 
-              <a href="">Company</a>
+              <a href="{{ route('account.company.sign-up') }}">Company</a>
               )
           </span>
 					</div>
@@ -156,6 +157,11 @@
 	
 	});
 </script>
+
+    <script>
+      
+    </script>
+		
 @endpush
 @endsection
 <!--end::Main-->

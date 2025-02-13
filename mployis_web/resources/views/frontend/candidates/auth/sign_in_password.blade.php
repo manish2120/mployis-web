@@ -15,7 +15,7 @@
       <!--end::Logo-->
       <!--begin::Wrapper-->
       @if (session('status'))
-      <div class="alert alert-success fw-bold fs-5">
+      <div class="alert-success position-absolute fw-bold fs-5 p-1 left-2/4 translate-x-[-50%] top-25 rounded-lg px-4 py-3">
         {{ session('status') }}
       </div>
       @endif

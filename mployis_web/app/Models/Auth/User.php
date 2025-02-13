@@ -5,6 +5,7 @@ namespace App\Models\Auth;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Frontend\Profile\HigherEducation;
+use App\Models\Frontend\Profile\CandidateEducation;
 use App\Models\Frontend\Profile\PersonalInformation;
 use App\Models\Frontend\Profile\TenthGradeEducation;
 use App\Models\Frontend\Profile\CandidateInformation;
@@ -66,19 +67,12 @@ class User extends Authenticatable
         return $this->hasOne(PersonalInformation::class);
     }
 
-    public function candidateTenthEducation() {
-        return $this->hasOne(TenthGradeEducation::class);
+    public function candidateEducation() {
+        return $this->hasOne(CandidateEducation::class);
     }
-    public function candidateTwelfthEducation() {
-        return $this->hasOne(TwelfthGradeEducation::class);
-    }
-    public function candidateHigherEducation() {
-        return $this->hasOne(HigherEducation::class);
-    }
-    public function candidatePostGraduateEducation() {
-        return $this->hasOne(PostGraduateEducation::class);
-    }
+   
     public function candidateExperienceInfo() {
         return $this->hasOne(ExperienceInformation::class);
     }
+
 }

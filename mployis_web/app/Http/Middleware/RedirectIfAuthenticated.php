@@ -16,11 +16,11 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, $guard = null): Response
     {
-        if(Auth::guard('candidate')->check()) {
-            // return redirect()->route('home');
+        if(Auth::guard('candidate')->check() || Auth::guard('company')->check()) {
             return $next($request);
-        } else {
-            abort(401);
-        }
+        } 
+        
+        return redirect()->route('home'); // Redirect only if neither candidate nor company is authenticated
+        
     }
 }

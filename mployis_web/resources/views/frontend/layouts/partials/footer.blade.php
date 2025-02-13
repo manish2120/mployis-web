@@ -36,58 +36,58 @@
                             <h4 class="fw-bolder text-gray-400 mb-6">More for Metronic</h4>
                             <!--end::Subtitle-->
                             <!--begin::Link-->
-                            <a href="https://keenthemes.com/faqs" class="text-white opacity-50 text-hover-primary fs-5 mb-6">FAQ</a>
+                            <a href="https://keenthemes.com/faqs" class=" opacity-50 text-hover-primary fs-5 mb-6">FAQ</a>
                             <!--end::Link-->
                             <!--begin::Link-->
-                            <a href="../../demo1/dist/documentation/getting-started.html" class="text-white opacity-50 text-hover-primary fs-5 mb-6">Documentaions</a>
+                            <a href="../../demo1/dist/documentation/getting-started.html" class=" opacity-50 text-hover-primary fs-5 mb-6">Documentaions</a>
                             <!--end::Link-->
                             <!--begin::Link-->
-                            <a href="https://www.youtube.com/c/KeenThemesTuts/videos" class="text-white opacity-50 text-hover-primary fs-5 mb-6">Video Tuts</a>
+                            <a href="https://www.youtube.com/c/KeenThemesTuts/videos" class=" opacity-50 text-hover-primary fs-5 mb-6">Video Tuts</a>
                             <!--end::Link-->
                             <!--begin::Link-->
-                            <a href="../../demo1/dist/documentation/getting-started/changelog.html" class="text-white opacity-50 text-hover-primary fs-5 mb-6">Changelog</a>
+                            <a href="../../demo1/dist/documentation/getting-started/changelog.html" class=" opacity-50 text-hover-primary fs-5 mb-6">Changelog</a>
                             <!--end::Link-->
                             <!--begin::Link-->
-                            <a href="https://devs.keenthemes.com/" class="text-white opacity-50 text-hover-primary fs-5 mb-6">Support Forum</a>
+                            <a href="https://devs.keenthemes.com/" class=" opacity-50 text-hover-primary fs-5 mb-6">Support Forum</a>
                             <!--end::Link-->
                             <!--begin::Link-->
-                            <a href="https://keenthemes.com/blog" class="text-white opacity-50 text-hover-primary fs-5">Blog</a>
+                            <a href="https://keenthemes.com/blog" class=" opacity-50 text-hover-primary fs-5">Blog</a>
                             <!--end::Link-->
                         </div> --}}
                         <!--end::Links-->
                         <!--begin::Links-->
-                        <div class="d-flex fw-bold flex-column ms-lg-20">
+                        <div class="flex flex-col fw-bold ms-lg-20">
                             <!--begin::Subtitle-->
-                            <h4 class="fw-bolder text-gray-400 mb-6">Stay Connected</h4>
+                            <h4 class="fw-bolder mb-6 text-gray-50">Stay Connected</h4>
                             <!--end::Subtitle-->
                             <!--begin::Link-->
-                            <a href="https://www.linkedin.com/company/sarvi-solutions/" class="mb-6">
+                            <a href="https://www.linkedin.com/company/sarvi-solutions/" class="mb-6 flex">
                                 <img src="{{ asset('frontend/assets/media/svg/brand-logos/facebook-4.svg') }}" class="h-20px me-2" alt="" />
-                                <span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Facebook</span>
+                                <span class=" opacity-50 text-hover-primary fs-5 mb-6 text-light">Facebook</span>
                             </a>
                             <!--end::Link-->
                             <!--begin::Link-->
-                            <a href="https://github.com/SarviSolutions/" class="mb-6">
+                            <a href="https://github.com/SarviSolutions/" class="mb-6 flex">
                                 <img src="{{ asset('frontend/assets/media/svg/brand-logos/github.svg') }}" class="h-20px me-2" alt="" />
-                                <span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Github</span>
+                                <span class=" opacity-50 text-hover-primary fs-5 mb-6 text-light">Github</span>
                             </a>
                             <!--end::Link-->
                             <!--begin::Link-->
                             {{-- <a href="https://www.linkedin.com/company/sarvi-solutions/" class="mb-6">
                                 <img src="{{ asset('frontend/assets/media/svg/brand-logos/twitter.svg') }}" class="h-20px me-2" alt="" />
-                                <span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Twitter</span>
+                                <span class=" opacity-50 text-hover-primary fs-5 mb-6">Twitter</span>
                             </a> --}}
                             <!--end::Link-->
                             <!--begin::Link-->
                             {{-- <a href="https://www.linkedin.com/company/sarvi-solutions/" class="mb-6">
                                 <img src="{{ asset('frontend/assets/media/svg/brand-logos/dribbble-icon-1.svg') }}" class="h-20px me-2" alt="" />
-                                <span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Dribbble</span>
+                                <span class=" opacity-50 text-hover-primary fs-5 mb-6">Dribbble</span>
                             </a> --}}
                             <!--end::Link-->
                             <!--begin::Link-->
-                            <a href="https://www.instagram.com/sarvisolutions/" class="mb-6">
+                            <a href="https://www.instagram.com/sarvisolutions/" class="mb-6 flex">
                                 <img src="{{ asset('frontend/assets/media/svg/brand-logos/instagram-2-1.svg') }}" class="h-20px me-2" alt="" />
-                                <span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Instagram</span>
+                                <span class=" opacity-50 text-hover-primary fs-5 mb-6 text-light">Instagram</span>
                             </a>
                             <!--end::Link-->
                         </div>

@@ -3,11 +3,11 @@
 @section('title', 'Home')
 <!--begin::Main-->
 @section('content')
-<div class="d-flex flex-column flex-root">
+<div class="flex flex-col flex-root">
 	<!--begin::Header Section-->
 	<div class="mb-0" id="home">
 		@if(session('status'))
-		<div class="alert alert-success fw-bold fs-5 absolute top-50">
+		<div class="alert-success fw-bold fs-5 p-1 absolute left-2/4 translate-x-[-50%] top-36 rounded-lg px-4 py-3">
 			{{ session('status') }}
 		</div>
 		@endif
@@ -15,7 +15,7 @@
 		<div class="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg" style="background-image: url(assets/media/svg/illustrations/landing.svg)">
 			
 			<!--begin::Landing hero-->
-			<div class="d-flex flex-column flex-center w-100 min-h-[200px] px-9">
+			<div class="d-flex flex-column flex-center w-100 min-h-[200px] px-9 py-10">
 				<!--begin::Heading-->
 				<div class="text-center mb-5 mb-lg-10 py-10 py-lg-20">
 					<!--begin::Title-->
@@ -25,11 +25,14 @@
 						<span id="kt_landing_hero_text">MPLOYIS</span>
 					</span></h1>
 					<!--end::Title-->
+					
 					<!--begin::Action-->
-					<a href="" class="btn btn-primary">Sign-up now</a>
+					@if(!Auth::guard('candidate')->check() && !Auth::guard('company')->check())
+					<a href="{{ route('account.candidate-sign-up') }}" class="btn btn-primary">Sign-up now</a>
+					@endif
 				</div>
-
 					<!--end::Action-->
+
 				<!--end::Heading-->
 				<!--begin::Clients-->
 				{{-- <div class="d-flex flex-center flex-wrap position-relative px-5">
@@ -112,7 +115,7 @@
 					<!--begin::Story-->
 					<div class="text-center mb-10 mb-md-0">
 						<!--begin::Illustration-->
-						<img src="{{url('frontend/assets/media/illustrations/sketchy-1/2.png')}}" class="mh-125px mb-9" alt="" />
+						<img src="{{url('frontend/assets/media/illustrations/sketchy-1/2.png')}}" class="mh-125px mb-9 m-auto" alt="" />
 						<!--end::Illustration-->
 						<!--begin::Heading-->
 						<div class="d-flex flex-center mb-5">
@@ -136,7 +139,7 @@
 					<!--begin::Story-->
 					<div class="text-center mb-10 mb-md-0">
 						<!--begin::Illustration-->
-						<img src="{{url('frontend/assets/media/illustrations/sketchy-1/8.png')}}" class="mh-125px mb-9" alt="" />
+						<img src="{{url('frontend/assets/media/illustrations/sketchy-1/8.png')}}" class="mh-125px mb-9 m-auto" alt="" />
 						<!--end::Illustration-->
 						<!--begin::Heading-->
 						<div class="d-flex flex-center mb-5">
@@ -160,7 +163,7 @@
 					<!--begin::Story-->
 					<div class="text-center mb-10 mb-md-0">
 						<!--begin::Illustration-->
-						<img src="{{url('frontend/assets/media/illustrations/sketchy-1/12.png')}}" class="mh-125px mb-9" alt="" />
+						<img src="{{url('frontend/assets/media/illustrations/sketchy-1/12.png')}}" class="mh-125px mb-9 m-auto" alt="" />
 						<!--end::Illustration-->
 						<!--begin::Heading-->
 						<div class="d-flex flex-center mb-5">
@@ -239,3 +242,20 @@
        
 <!--end::How It Works Section-->
 <!--end::Main-->
+
+@push('custom_scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toastMsg = document.querySelector('.alert-success');
+            if (toastMsg) {
+                setTimeout(() => {
+                    toastMsg.style.transition = "opacity 0.5s ease-out";
+                    toastMsg.style.opacity = "0";
+                    setTimeout(() => {
+                        toastMsg.remove();
+                    }, 500);
+                }, 5000);
+            }
+        });
+    </script>
+@endpush

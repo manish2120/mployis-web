@@ -180,7 +180,7 @@
 </style> --}}
 
 <!--begin::Header-->
-<div class="landing-header min-h-[150px]">
+<div class="landing-header min-h-[100px]">
     <!--begin::Container-->
     <div class="container">
         <!--begin::Wrapper-->
@@ -212,12 +212,12 @@
                     <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="{{ url('/pricing') }}">Pricing</a>
                 </div>
                 <div class="menu-item dropdown">
-                    <a class="menu-link nav-link py-3 px-4 px-xxl-6 dropdown-toggle" href="#" id="jobBoardsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Job Boards
+                    <a class="menu-link nav-link py-3 px-4 px-xxl-6 dropdown-toggle" href="" id="jobBoardsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Jobs
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="jobBoardsDropdown">
-                        <li><a class="dropdown-item" href="">Job Boards</a></li>
-                        <li><a class="dropdown-item" href="">Company List</a></li>
+                        <li><a class="dropdown-item" href="{{ route('auth.account.company.job-board') }}">Job Board</a></li>
+                        <li><a class="dropdown-item" href="{{ route('auth.account.company.company-list') }}">Company List</a></li>
                     </ul>
                 </div>
                 <div class="menu-item">
@@ -322,12 +322,13 @@
             <!--begin::Toolbar-->
             <div class="flex-equal text-end ms-1">
                 <div class="dropdown">
+
                     <button class="btn btn-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         User Menu
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                       
-                            @if(!Auth::guard('candidate')->check())
+                            @if(!Auth::guard('candidate')->check() && !Auth::guard('company')->check())
                             <li><a class="dropdown-item" href="{{ route('account.candidate-sign-in') }}">Sign in</a></li>
                             @endif
                             
@@ -335,26 +336,13 @@
                             <li><a class="dropdown-item" href="{{ route('account.candidate.profile') }}">Profile</a></li>
                             <li><a class="dropdown-item" href="">Applications Status</a></li>
                             <li><a class="dropdown-item text-danger" href="{{ route('auth.candidate-sign-out') }}">Sign Out</a></li>
+                            @elseif(Auth::guard('company')->check())
+                            <li><a class="dropdown-item" href="{{ route('auth.account.company.profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route('auth.account.company.post-job-form') }}">Post a Job</a></li>
+                            <li><a class="dropdown-item" href="{{ route('auth.account.company.posted-jobs') }}">Posted Jobs</a></li>
+                            <li><a class="dropdown-item" href="#">Applications Status</a></li>
+                            <li><a class="dropdown-item text-danger" href="{{ route('auth.company-sign-out') }}">Sign Out</a></li>
                             @endif
-
-                        {{-- @if(Auth::guard('company')->check())
-                            <!-- If the company is logged in -->
-                            <li><a class="dropdown-item" href="{{ route('company-profile') }}">Profile</a></li>
-                            <li><a class="dropdown-item" href="{{ route('company.accepted-candidates-application') }}">Applications</a></li>
-                            <li><a class="dropdown-item" href="{{ route('posted-jobs') }}">Posted Jobs</a></li>
-                            <li><a class="dropdown-item" href="{{ route('post-job') }}">Post a Job</a></li>
-                            <li><a class="dropdown-item text-danger" href="{{ route('sign-out.company') }}">Sign Out</a></li>
-                        @elseif(Auth::check())
-                            <!-- If a regular user is logged in -->
-                            <li><a class="dropdown-item" href="{{ route('user-profile') }}">Profile</a></li>
-                            <li><a class="dropdown-item" href="{{ route('company.accepted-candidates-application') }}">Applications Status</a></li>
-                            <li><a class="dropdown-item text-danger" href="{{ route('sign-out') }}">Sign Out</a></li>
-                        @else
-                            <!-- If no one is logged in -->
-                            <li><a class="dropdown-item" href="{{ route('sign-in') }}">Sign In</a></li>
-                           
-                        @endif --}}
-                        
                     </ul>
                 </div>
             </div>

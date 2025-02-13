@@ -1,16 +1,25 @@
 @extends('frontend.layouts.app')
 @section('title', 'User Profile')
 @push('custom_styles')
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.css" integrity="sha512-087vysR/jM0N5cp13Vlp+ZF9wx6tKbvJLwPO8Iit6J7R+n7uIMMjg37dEgexOshDmDITHYY5useeSmfD1MYiQA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.js" integrity="sha512-lR8d1BXfYQuiqoM/LeGFVtxFyspzWFTZNyYIiE5O2CcAGtTCRRUMLloxATRuLz8EmR2fYqdXYlrGh+D6TVGp3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <style>
     body{
         margin-top:100px;
     }
-    .image-container {
+    /* .image-container {
         width: 100%;
         height: 100%;
         margin: 20px 0;
         overflow: hidden;
-    }
+    } */
+
     .image-container img {
         max-width: 100%;
     }
@@ -36,10 +45,33 @@
         background-position: center;
     }
 
-    /* .cropper-container.cropper-bg {
-        min-height: 50vh;
-        min-width: 100vh;
-    } */
+    .image-container {
+        height: 200px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+.cropper-container .cropper-bg {
+    height: 100%;
+    width: 100%;
+}
+
+/* .img-cropper {
+  max-width: 600px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+} */
+
+
+   /* .modal-body {
+    min-height: 400px;
+    max-height:400px;
+} */
 
     /* Hide the arrows in WebKit browsers (Chrome, Safari, Edge) */
     input[type="text"]::-webkit-outer-spin-button,
@@ -49,30 +81,25 @@
     }
 
     .status {
-    z-index: 5;
     position: fixed;
     left: 50%;
+    z-index: 1000;
     top: 15%;
+    transform: translateX(-50%);
 }
 
 </style>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.css" integrity="sha512-087vysR/jM0N5cp13Vlp+ZF9wx6tKbvJLwPO8Iit6J7R+n7uIMMjg37dEgexOshDmDITHYY5useeSmfD1MYiQA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.js" integrity="sha512-lR8d1BXfYQuiqoM/LeGFVtxFyspzWFTZNyYIiE5O2CcAGtTCRRUMLloxATRuLz8EmR2fYqdXYlrGh+D6TVGp3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @endpush
 
 @section('content')
     <!--begin::Main-->
     <div class="d-flex flex-column flex-root">
         <!--begin::Header Section-->
-            <div class="status alert alert-dismissible align-items-center position-absolute" role="alert">
+            <div class="status align-items-center fw-bold" role="alert">
                 @if (session('status'))
-                    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:">
-                        <use xlink:href="#check-circle-fill"></use>
-                    </svg>
-                    <div class="d-flex justify-content-center fw-bold">{{ session('status') }}</div>
-                    {{-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> --}}
+                    <div class="d-flex justify-content-center fade">{{ session('status') }}</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     @endif
                 </div>
 
@@ -82,7 +109,7 @@
 
             @if (session('user_name'))
                 <div class="d-flex justify-content-center">
-                    <span id="alert-message2" class="alert alert-info text-center fw-bold fs-5 position-absolute mt-5">
+                    <span id="alert-message2" class="alert alert-info text-center fw-bold fs-5 position-absolute mt-5 z-10">
                         {{ session('user_name') }}
                     </span>
                 </div>
@@ -113,7 +140,7 @@
                             <!--begin::Nav-->
                             <div class="stepper-nav">
                                 <!--begin::Step 1-->
-                                <div class="stepper-item current" data-kt-stepper-element="nav" id="candidateStep">
+                                <div class="stepper-item current cursor-pointer" data-kt-stepper-element="nav" id="candidateStep">
                                     <!--begin::Line-->
                                     <div class="stepper-line w-40px"></div>
                                     <!--end::Line-->
@@ -132,7 +159,7 @@
                                 </div>
                                 <!--end::Step 1-->
                                 <!--begin::Step 2-->
-                                <div class="stepper-item" data-kt-stepper-element="nav" id="educationStep">
+                                <div class="stepper-item cursor-pointer" data-kt-stepper-element="nav" id="educationStep">
                                     <!--begin::Line-->
                                     <div class="stepper-line w-40px"></div>
                                     <!--end::Line-->
@@ -171,7 +198,7 @@
                                 <!--end::Step 3-->
 
                                 <!--begin::Step 5-->
-                                <div class="stepper-item" data-kt-stepper-element="nav" id="experienceStep">
+                                <div class="stepper-item cursor-pointer" data-kt-stepper-element="nav" id="experienceStep">
                                     <!--begin::Line-->
                                     <div class="stepper-line w-40px"></div>
                                     <!--end::Line-->
@@ -343,21 +370,21 @@
                                                             <!--end::Input group-->
 
                                                             <!-- Cropper Modal -->
-                                                            <div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
+                                                        <div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-lg">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <div>
                                                                         <h5 class="modal-title" id="cropModalLabel">Crop Your Image</h5>
-                                                                        <h5 class="text-xs font-medium text-slate-500 dark:text-gray-400">Drag and zoom the image using the mouse as needed.</h5>
+                                                                        <h5 class="text-xs font-medium text-slate-500 dark:text-gray-400 inline">Drag and zoom the image using the mouse as needed.</h5>
                                                                         </div>
                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                     </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="image-container">
-                                                                            <img id="image" src="" alt="Image Preview" style="display:none;">
-                                                                        </div>
+                                                                <div class="p-5 overflow-auto">
+                                                                    <div class="modal-body w-100 flex justify-center">
+                                                                        <img id="image" src="" alt="Image Preview" style="display:none;">
                                                                     </div>
+                                                                </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                         <button type="button" id="cropButton" class="btn btn-success">Crop Image</button>
@@ -557,7 +584,7 @@
                                                                 <!--begin::Input group-->
                                                                 <div class="fv-row mb-7 fv-plugins-icon-container">
                                                                     <!--begin::Label-->
-                                                                    <label class="fs-6 fw-bold form-label mt-3">
+                                                                    <label for="country" class="fs-6 fw-bold form-label mt-3">
                                                                         <span class="required">Country</span>
                                                                     </label>
                                                                     <!--end::Label-->
@@ -565,8 +592,9 @@
                                                                         <div class="form-floating border rounded">
                                                                             <!--begin::Select2-->
                                                                             <select id="country-dropdown"
-                                                                                class="form-select form-select-solid py-3"
+                                                                                class="form-select form-select-solid py-3 cursor-pointer"
                                                                                 name="country" {{-- data-kt-ecommerce-settings-type="select2_flags" --}}
+                                                                                data-control="select2"
                                                                                 data-placeholder="Select a country"
                                                                                 data-select2-id="select2-data-kt_ecommerce_select2_country"
                                                                                 tabindex="-1">
@@ -610,7 +638,7 @@
                                                                         <div class="form-floating border rounded">
                                                                             <!--begin::Select2-->
                                                                             <select id="state-dropdown"
-                                                                                class="form-select form-select-solid py-3"
+                                                                                class="form-select form-select-solid py-3 cursor-pointer"
                                                                                 name="state" {{-- data-kt-ecommerce-settings-type="select2_flags"
                                                                         data-placeholder="Select a state" --}}
                                                                                 {{-- data-select2-id="select2-data-kt_ecommerce_select2_country" --}} tabindex="-1">
@@ -659,7 +687,7 @@
                                                                         <div class="form-floating border rounded">
                                                                             <!--begin::Select2-->
                                                                             <select id="district-dropdown"
-                                                                                class="form-select form-select-solid py-3"
+                                                                                class="form-select form-select-solid py-3 cursor-pointer"
                                                                                 name="district" {{-- data-kt-ecommerce-settings-type="select2_flags"
                                                                             data-placeholder="Select a country"
                                                                             data-select2-id="select2-data-kt_ecommerce_select2_country" --}}
@@ -1306,6 +1334,7 @@
                                                                 <!--begin::Col-->
                                                                 <div class="col">
                                                                 <input type="hidden" name="candidate_id" value="{{ $user->id }}" id="candidate_id">
+                                                                <input type="hidden" name="education_id" value="{{ $tenthGradeEducationId->id ?? '' }}" id="tenth_education_id" value="1">
 
                                                                     <!--begin::Input group-->
                                                                     <div class="fv-row mb-7 fv-plugins-icon-container">
@@ -1323,8 +1352,8 @@
                                                                         <!--begin::Input-->
                                                                         <input type="text"
                                                                             class="form-control form-control-solid"
-                                                                            name="school_name"
-                                                                            value="{{ old('school_name', $candidateTenthGradeInfo->school_name ?? '') }}">
+                                                                            name="school_or_college"
+                                                                            value="{{ old('school_or_college', $tenthGradeEducationRecord->school_or_college ?? '') }}">
                                                                         <!--end::Input-->
                                                                         <div class="invalid-feedback"></div>
 
@@ -1348,32 +1377,26 @@
                                                                         </label>
                                                                         <!--end::Label-->
                                                                         <!--begin::Input-->
+                                                                        @php
+                                                                            $selectedBoard = old('board_name', isset($tenthGradeEducationRecord) ? $tenthGradeEducationRecord->board_name : '');
+                                                                        @endphp
+
                                                                         <select name="board_name"
-                                                                            class="form-select form-select-lg form-select-solid"
-                                                                            data-control="select2"
-                                                                            data-placeholder="Select..."
-                                                                            data-allow-clear="true"
-                                                                            data-hide-search="true">
-                                                                            <option value="" {{ old('board_name', isset($candidateTenthGradeInfo) ? $candidateTenthGradeInfo->board_name : '') === '' ? 'selected' : '' }}>Select
-                                                                                Board</option>
-                                                                            <option value="CBSE" {{ old(isset($candidateTenthGradeInfo) ? $candidateTenthGradeInfo->board_name : '') === 'CBSE' ? 'selected' : '' }}>
-                                                                                CBSE</option>
-                                                                                <option value="ICSC" {{ old('board_name', isset($candidateTenthGradeInfo) ? $candidateTenthGradeInfo->board_name : '') === 'ICSC' ? 'selected' : '' }}>
-                                                                                    ICSE
-                                                                                </option>
-                                                                                <option value="IB" {{ old('board_name', isset($candidateTenthGradeInfo) ? $candidateTenthGradeInfo->board_name : '') === 'IB' ? 'selected' : '' }}>
-                                                                                    IGCSE
-                                                                                </option>
-                                                                                <option value="NIOS" {{ old('board_name', isset($candidateTenthGradeInfo) ? $candidateTenthGradeInfo->board_name : '') === 'NIOS' ? 'selected' : '' }}>
-                                                                                    NIOS
-                                                                                </option>
-                                                                                <option value="State Board" {{ old('board_name', isset($candidateTenthGradeInfo) ? $candidateTenthGradeInfo->board_name : '') === 'State Board' ? 'selected' : '' }}>
-                                                                                    State Board
-                                                                                </option>
-                                                                                <option value="Other" {{ old('board_name', isset($candidateTenthGradeInfo) ? $candidateTenthGradeInfo->board_name : '') === 'Other' ? 'selected' : '' }}>
-                                                                                    Other
-                                                                                </option>
+                                                                                class="form-select form-select-lg form-select-solid"
+                                                                                data-control="select2"
+                                                                                data-placeholder="Select..."
+                                                                                data-allow-clear="true"
+                                                                                data-hide-search="true">
+                                                                            
+                                                                            <option value="" {{ $selectedBoard === '' ? 'selected' : '' }}>Select Board</option>
+                                                                            <option value="CBSE" {{ $selectedBoard === 'CBSE' ? 'selected' : '' }}>CBSE</option>
+                                                                            <option value="ICSC" {{ $selectedBoard === 'ICSC' ? 'selected' : '' }}>ICSE</option>
+                                                                            <option value="IB" {{ $selectedBoard === 'IB' ? 'selected' : '' }}>IGCSE</option>
+                                                                            <option value="NIOS" {{ $selectedBoard === 'NIOS' ? 'selected' : '' }}>NIOS</option>
+                                                                            <option value="State Board" {{ $selectedBoard === 'State Board' ? 'selected' : '' }}>State Board</option>
+                                                                            <option value="Other" {{ $selectedBoard === 'Other' ? 'selected' : '' }}>Other</option>
                                                                         </select>
+
                                                                         <!--end::Input-->
                                                                         <div class="invalid-feedback"></div>
 
@@ -1385,8 +1408,7 @@
                                                             <!--end::Input group-->
                                                             <!--begin::Input group-->
 
-                                                            <div
-                                                                class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                                                            <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
                                                                 <!--begin::Col-->
                                                                 <div class="col">
                                                                     <!--begin::Input group-->
@@ -1410,7 +1432,8 @@
                                                                             name="grade_percentage"
                                                                             placeholder="00.00" min="0"
                                                                             max="100" step="0.01"
-                                                                            value="{{ isset($candidateTenthGradeInfo) && $candidateTenthGradeInfo->grade_or_percentage ?? '' }}">
+                                                                            value="{{ old('grade_percentage', isset($tenthGradeEducationRecord) ? $tenthGradeEducationRecord->grade_or_percentage : '') }}"
+>
                                                                         <!--end::Input-->
                                                                         <div class="invalid-feedback"></div>
 
@@ -1418,6 +1441,7 @@
                                                                     <!--end::Input group-->
                                                                 </div>
                                                                 <!--end::Col-->
+
                                                                 <!--begin::Col-->
                                                                 <div class="col">
                                                                     <!--begin::Input group-->
@@ -1444,13 +1468,13 @@
                                                                         <!-- File existence message -->
                                                                         <div class="mt-2">
                                                                             <span class="text-success fw-bold">
-                                                                                @if (isset($candidateTenthGradeInfo) && $candidateTenthGradeInfo->passing_certificate)
+                                                                                @if (isset($tenthGradeEducationRecord) && $tenthGradeEducationRecord->passing_certificate)
                                                                             <div class="mt-2">
                                                                                 <span class="text-success fw-bold">File
                                                                                     uploaded:
-                                                                                    <a href="{{ asset($candidateTenthGradeInfo->passing_certificate) }}"
+                                                                                    <a href="{{ asset($tenthGradeEducationRecord->passing_certificate) }}"
                                                                                         target="_blank">
-                                                                                        {{ strlen(basename($candidateTenthGradeInfo->passing_certificate)) > 15 ? substr(basename($candidateTenthGradeInfo->passing_certificate), 0, 15) . '...' : basename($candidateTenthGradeInfo->passing_certificate) }}
+                                                                                        {{ strlen(basename($tenthGradeEducationRecord->passing_certificate)) > 15 ? substr(basename($tenthGradeEducationRecord->passing_certificate), 0, 15) . '...' : basename($tenthGradeEducationRecord->passing_certificate) }}
                                                                                     </a>
                                                                                 </span>
                                                                             </div>
@@ -1461,6 +1485,7 @@
                                                                         @endif
                                                                             </span>
                                                                         </div>
+                                                                        
                                                                     </div>
                                                                     <!--end::Input group-->
                                                                 </div>
@@ -1481,7 +1506,7 @@
                                                                 <input type="text"
                                                                     class="form-control form-control-solid"
                                                                     name="year_of_passing"
-                                                                    value="{{ isset($candidateTenthGradeInfo) && $candidateTenthGradeInfo->year_of_passing ?? '' }}">
+                                                                    value="{{ old('year_of_passing', isset($tenthGradeEducationRecord) ? $tenthGradeEducationRecord->year_of_passing : '') }}">
 
                                                                 <div class="invalid-feedback"></div>
                                                             </div>
@@ -1576,6 +1601,8 @@
                                                                 <!--begin::Col-->
                                                                 <div class="col">
                                                                 <input type="hidden" name="candidate_id" value="{{ $user->id }}" id="candidate_id">
+                                                                <input type="hidden" name="education_id" value="{{ $twelfthGradeEducationId->id ?? '' }}" id="twelfth_education_id" value="2">
+
 
                                                                     <!--begin::Input group-->
                                                                     <div class="fv-row mb-7 fv-plugins-icon-container">
@@ -1593,8 +1620,9 @@
                                                                         <!--begin::Input-->
                                                                         <input type="text"
                                                                             class="form-control form-control-solid"
-                                                                            name="college_name"
-                                                                            value="{{ old('college_name', $candidateTwelfthGradeInfo->college_name ?? '') }}">
+                                                                            name="school_or_college"
+                                                                            value="{{ old('school_or_college', isset($twelfthGradeEducationRecord) ? $twelfthGradeEducationRecord->school_or_college : '') }}"
+>
                                                                         <!--end::Input-->
                                                                         <div class="invalid-feedback"></div>
                                                                     </div>
@@ -1617,6 +1645,11 @@
                                                                                 aria-label=" Board Name"></i>
                                                                         </label>
                                                                         <!--end::Label-->
+
+                                                                        @php
+                                                                        $selectedBoard = old('board_name', isset($twelfthGradeEducationRecord) ? $twelfthGradeEducationRecord->board_name : '');
+                                                                        @endphp
+
                                                                         <!--begin::Input-->
                                                                         <select name="board_name"
                                                                             class="form-select form-select-lg form-select-solid"
@@ -1624,25 +1657,25 @@
                                                                             data-placeholder="Select..."
                                                                             data-allow-clear="true"
                                                                             data-hide-search="true">
-                                                                            <option value="" {{ old('board_name', isset($candidateTwelfthGradeInfo) ? $candidateTwelfthGradeInfo->board_name : '') === '' ? 'selected' : '' }}>
+                                                                            <option value="" {{ $selectedBoard === '' ? 'selected' : '' }}>
                                                                                 Select Board
                                                                             </option>
-                                                                            <option value="CBSE" {{ old('board_name', isset($candidateTwelfthGradeInfo) ? $candidateTwelfthGradeInfo->board_name : '') === 'CBSE' ? 'selected' : '' }}>
+                                                                            <option value="CBSE" {{ $selectedBoard === 'CBSE' ? 'selected' : '' }}>
                                                                                 CBSE
                                                                             </option>
-                                                                            <option value="ICSC" {{ old('board_name', isset($candidateTwelfthGradeInfo) ? $candidateTwelfthGradeInfo->board_name : '') === 'ICSC' ? 'selected' : '' }}>
+                                                                            <option value="ICSC" {{ $selectedBoard === 'ICSC' ? 'selected' : '' }}>
                                                                                 ISC
                                                                             </option>
-                                                                            <option value="IB" {{ old('board_name', isset($candidateTwelfthGradeInfo) ? $candidateTwelfthGradeInfo->board_name : '') === 'IB' ? 'selected' : '' }}>
+                                                                            <option value="IB" {{ $selectedBoard === 'IB' ? 'selected' : '' }}>
                                                                                 IB
                                                                             </option>
-                                                                            <option value="NIOS" {{ old('board_name', isset($candidateTwelfthGradeInfo) ? $candidateTwelfthGradeInfo->board_name : '') === 'NIOS' ? 'selected' : '' }}>
+                                                                            <option value="NIOS" {{ $selectedBoard === 'NIOS' ? 'selected' : '' }}>
                                                                                 NIOS
                                                                             </option>
-                                                                            <option value="State Board" {{ old('board_name', isset($candidateTwelfthGradeInfo) ? $candidateTwelfthGradeInfo->board_name : '') === 'State Board' ? 'selected' : '' }}>
+                                                                            <option value="State Board" {{ $selectedBoard === 'State Board' ? 'selected' : '' }}>
                                                                                 State Board
                                                                             </option>
-                                                                            <option value="Other" {{ old('board_name', isset($candidateTwelfthGradeInfo) ? $candidateTwelfthGradeInfo->board_name : '') === 'Other' ? 'selected' : '' }}>
+                                                                            <option value="Other" {{ $selectedBoard === 'Other' ? 'selected' : '' }}>
                                                                                 Other
                                                                             </option>
                                                                             
@@ -1712,9 +1745,9 @@
                                                                             <div class="mt-2">
                                                                                 <span class="text-success fw-bold">
                                                                                     File Uploaded :
-                                                                                    @if (isset($candidateTwelfthGradeInfo) && $candidateTwelfthGradeInfo->passing_certificate)
-                                                                                    <a href="{{ asset($candidateTwelfthGradeInfo->passing_certificate) }}">
-                                                                                        {{ strlen($candidateTwelfthGradeInfo) > 15 ? substr(basename($candidateTwelfthGradeInfo->passing_certificate), 0, 15) . '...' : basename($candidateTwelfthGradeInfo)}}
+                                                                                    @if (isset($twelfthGradeEducationRecord) && $twelfthGradeEducationRecord->passing_certificate)
+                                                                                    <a href="{{ asset($twelfthGradeEducationRecord->passing_certificate) }}">
+                                                                                        {{ strlen($twelfthGradeEducationRecord) > 15 ? substr(basename($twelfthGradeEducationRecord->passing_certificate), 0, 15) . '...' : basename($twelfthGradeEducationRecord)}}
                                                                                     </a>
                                                                                     @else
                                                                                     file not found
@@ -1743,7 +1776,7 @@
                                                                 <input type="text"
                                                                     class="form-control form-control-solid"
                                                                     name="year_of_passing"
-                                                                    value="{{ old('year_of_passing', $candidateTwelfthGradeInfo->year_of_passing ?? '') }}">
+                                                                    value="{{ old('year_of_passing', $twelfthGradeEducationRecord->year_of_passing ?? '') }}">
 
                                                                     <div class="invalid-feedback"></div>
                                                             </div>
@@ -1828,6 +1861,7 @@
                                                                 <!--begin::Col-->
                                                                 <div class="col">
                                                                 <input type="hidden" name="candidate_id" value="{{ $user->id }}" id="candidate_id">
+                                                                <input type="hidden" name="education_id" value="{{ $higherEducationId->id ?? '' }}" id="higher_education_id" value="3">
 
                                                                     <!--begin::Input group-->
                                                                     <div class="fv-row mb-7 fv-plugins-icon-container">
@@ -1845,8 +1879,8 @@
                                                                         <!--begin::Input-->
                                                                         <input type="text"
                                                                             class="form-control form-control-solid"
-                                                                            name="college_institute_name"
-                                                                            value="{{ old('college_institute_name', $candidateHigherEducationInfo->institute_or_college_name ?? '') }}">
+                                                                            name="school_or_college"
+                                                                            value="{{ old('school_or_college', $higherEducationRecord->school_or_college ?? '') }}">
                                                                         <!--end::Input-->
                                                                         <div class="invalid-feedback"></div>
 
@@ -1869,6 +1903,10 @@
                                                                                 aria-label=" Board Name"></i>
                                                                         </label>
                                                                         <!--end::Label-->
+                                                                        @php
+                                                                            $selectedBoard = old('board_name', isset($higherEducationRecord) ? $higherEducationRecord->board_name : '');
+                                                                        @endphp
+
                                                                         <!--begin::Input-->
                                                                         <select name="board_name"
                                                                             class="form-select form-select-lg form-select-solid"
@@ -1876,22 +1914,22 @@
                                                                             data-placeholder="Select..."
                                                                             data-allow-clear="true"
                                                                             data-hide-search="true">
-                                                                            <option value="" {{ old('board_name', isset($candidateHigherEducationInfo) ? $candidateHigherEducationInfo->board_name : '') === '' ? 'selected' : '' }}>
+                                                                            <option value="" {{ $selectedBoard === '' ? 'selected' : '' }}>
                                                                                 Select University
                                                                             </option>
-                                                                            <option value="State University" {{ old('board_name', isset($candidateHigherEducationInfo) ? $candidateHigherEducationInfo->board_name : '') === 'State University' ? 'selected' : '' }}>
+                                                                            <option value="State University" {{ $selectedBoard === 'State University' ? 'selected' : '' }}>
                                                                                 State University
                                                                             </option>
-                                                                            <option value="Central University" {{ old('board_name', isset($candidateHigherEducationInfo) ? $candidateHigherEducationInfo->board_name : '') === 'Central University' ? 'selected' : '' }}>
+                                                                            <option value="Central University" {{ $selectedBoard === 'Central University' ? 'selected' : '' }}>
                                                                                 Central University
                                                                             </option>
-                                                                            <option value="Private University" {{ old('board_name', isset($candidateHigherEducationInfo) ? $candidateHigherEducationInfo->board_name : '') === 'Private University' ? 'selected' : '' }}>
+                                                                            <option value="Private University" {{ $selectedBoard === 'Private University' ? 'selected' : '' }}>
                                                                                 Private University
                                                                             </option>
-                                                                            <option value="Deemed University" {{ old('board_name', isset($candidateHigherEducationInfo) ? $candidateHigherEducationInfo->board_name : '') === 'Deemed University' ? 'selected' : '' }}>
+                                                                            <option value="Deemed University" {{ $selectedBoard === 'Deemed University' ? 'selected' : '' }}>
                                                                                 Deemed University
                                                                             </option>
-                                                                            <option value="Other" {{ old('board_name', isset($candidateHigherEducationInfo) ? $candidateHigherEducationInfo->board_name : '') === 'Other' ? 'selected' : '' }}>
+                                                                            <option value="Other" {{ $selectedBoard === 'Other' ? 'selected' : '' }}>
                                                                                 Other
                                                                             </option>
                                                                             
@@ -1931,7 +1969,7 @@
                                                                             name="grade_percentage"
                                                                             placeholder="00.00" min="0"
                                                                             max="100" step="0.01"
-                                                                            value="{{ old('grade_percentage', $candidateHigherEducationInfo->grade_or_percentage ?? '') }}">
+                                                                            value="{{ old('grade_percentage', $higherEducationRecord->grade_or_percentage ?? '') }}">
                                                                         <!--end::Input-->
                                                                         <div class="invalid-feedback"></div>
                                                                     </div>
@@ -1965,9 +2003,9 @@
                                                                         <div class="mt-2">
                                                                             <span class="text-success fw-bold">
                                                                                 File Uploaded :
-                                                                                @if (isset($candidateHigherEducationInfo) && $candidateHigherEducationInfo->passing_certificate)
-                                                                                <a href="{{ asset($candidateHigherEducationInfo->passing_certificate) }}">
-                                                                                    {{ strlen($candidateHigherEducationInfo) > 15 ? substr(basename($candidateHigherEducationInfo->passing_certificate), 0, 15) . '...' : basename($candidateHigherEducationInfo)}}
+                                                                                @if (isset($higherEducationRecord) && $higherEducationRecord->passing_certificate)
+                                                                                <a href="{{ asset($higherEducationRecord->passing_certificate) }}">
+                                                                                    {{ strlen($higherEducationRecord) > 15 ? substr(basename($higherEducationRecord->passing_certificate), 0, 15) . '...' : basename($higherEducationRecord)}}
                                                                                 </a>
                                                                                 @else
                                                                                 file not found
@@ -1998,7 +2036,7 @@
                                                                 <input type="text"
                                                                     class="form-control form-control-solid"
                                                                     name="year_of_passing"
-                                                                    value="{{ old('year_of_passing', $candidateHigherEducationInfo->year_of_passing ?? '') }}">
+                                                                    value="{{ old('year_of_passing', $higherEducationRecord->year_of_passing ?? '') }}">
                                                                 <div class="invalid-feedback"></div>
                                                             </div>
                                                             <!--end::Input group-->
@@ -2085,6 +2123,7 @@
                                                                 <!--begin::Col-->
                                                                 <div class="col">
                                                                 <input type="hidden" name="candidate_id" value="{{ $user->id }}" id="candidate_id">
+                                                                <input type="hidden" name="education_id" value="{{ $postGraduateEducationId->id ?? '' }}" id="postgraduate_education_id" value="4">
 
                                                                     <!--begin::Input group-->
                                                                     <div
@@ -2103,8 +2142,8 @@
                                                                         <!--begin::Input-->
                                                                         <input type="text"
                                                                             class="form-control form-control-solid"
-                                                                            name="college_institute_name"
-                                                                            value="{{ $candidatePostGraduateInfo->institute_or_college_name ?? '' }}">
+                                                                            name="school_or_college"
+                                                                            value="{{ $postgraduateEducationRecord->school_or_college ?? '' }}">
                                                                         <!--end::Input-->
                                                                         <div class="invalid-feedback"></div>
                                                                     </div>
@@ -2126,6 +2165,9 @@
                                                                                 aria-label=" Board Name"></i>
                                                                         </label>
                                                                         <!--end::Label-->
+                                                                        @php
+                                                                        $selectedBoard = old('board_name', isset($postgraduateEducationRecord) ? $postgraduateEducationRecord->board_name : '');
+                                                                        @endphp
                                                                         <!--begin::Input-->
                                                                         <select name="board_name"
                                                                             class="form-select form-select-lg form-select-solid"
@@ -2133,22 +2175,22 @@
                                                                             data-placeholder="Select..."
                                                                             data-allow-clear="true"
                                                                             data-hide-search="true">
-                                                                            <option value="" {{ old('board_name', isset($candidatePostGraduateInfo) ? $candidatePostGraduateInfo->board_name : '') === '' ? 'selected' : '' }}>
+                                                                            <option value="" {{ $selectedBoard === '' ? 'selected' : '' }}>
                                                                                 Select University
                                                                             </option>
-                                                                            <option value="State University" {{ old('board_name', isset($candidatePostGraduateInfo) ? $candidatePostGraduateInfo->board_name : '') === 'State University' ? 'selected' : '' }}>
+                                                                            <option value="State University" {{ $selectedBoard === 'State University' ? 'selected' : '' }}>
                                                                                 State University
                                                                             </option>
-                                                                            <option value="Central University" {{ old('board_name', isset($candidatePostGraduateInfo) ? $candidatePostGraduateInfo->board_name : '') === 'Central University' ? 'selected' : '' }}>
+                                                                            <option value="Central University" {{ $selectedBoard === 'Central University' ? 'selected' : '' }}>
                                                                                 Central University
                                                                             </option>
-                                                                            <option value="Private University" {{ old('board_name', isset($candidatePostGraduateInfo) ? $candidatePostGraduateInfo->board_name : '') === 'Private University' ? 'selected' : '' }}>
+                                                                            <option value="Private University" {{ $selectedBoard === 'Private University' ? 'selected' : '' }}>
                                                                                 Private University
                                                                             </option>
-                                                                            <option value="Deemed University" {{ old('board_name', isset($candidatePostGraduateInfo) ? $candidatePostGraduateInfo->board_name : '') === 'Deemed University' ? 'selected' : '' }}>
+                                                                            <option value="Deemed University" {{ $selectedBoard === 'Deemed University' ? 'selected' : '' }}>
                                                                                 Deemed University
                                                                             </option>
-                                                                            <option value="Other" {{ old('board_name', isset($candidatePostGraduateInfo) ? $candidatePostGraduateInfo->board_name : '') === 'Other' ? 'selected' : '' }}>
+                                                                            <option value="Other" {{ $selectedBoard === 'Other' ? 'selected' : '' }}>
                                                                                 Other
                                                                             </option>
                                                                             
@@ -2186,7 +2228,7 @@
                                                                             name="grade_percentage"
                                                                             placeholder="00.00" min="0"
                                                                             max="100" step="0.01"
-                                                                            value="{{ old('grade_percentage', $candidatePostGraduateInfo->grade_percentage ?? '') }}">
+                                                                            value="{{ old('grade_percentage', $postgraduateEducationRecord->grade_or_percentage ?? '') }}">
                                                                         <!--end::Input-->
                                                                         <div class="invalid-feedback"></div>
                                                                     </div>
@@ -2222,9 +2264,9 @@
                                                                         <div class="mt-2">
                                                                             <span class="text-success fw-bold">
                                                                                 File Uploaded :
-                                                                                @if (isset($candidatePostGraduateInfo) && $candidatePostGraduateInfo->passing_certificate)
-                                                                                <a href="{{ asset($candidatePostGraduateInfo->passing_certificate) }}">
-                                                                                    {{ strlen($candidatePostGraduateInfo) > 15 ? substr(basename($candidatePostGraduateInfo->passing_certificate), 0, 15) . '...' : basename($candidatePostGraduateInfo)}}
+                                                                                @if (isset($postgraduateEducationRecord) && $postgraduateEducationRecord->passing_certificate)
+                                                                                <a href="{{ asset($postgraduateEducationRecord->passing_certificate) }}">
+                                                                                    {{ strlen($postgraduateEducationRecord) > 15 ? substr(basename($postgraduateEducationRecord->passing_certificate), 0, 15) . '...' : basename($postgraduateEducationRecord)}}
                                                                                 </a>
                                                                                 @else
                                                                                 file not found
@@ -2253,7 +2295,7 @@
                                                                 <input type="text"
                                                                     class="form-control form-control-solid"
                                                                     name="year_of_passing"
-                                                                    value="{{ old('year_of_passing', $candidatePostGraduateInfo->year_of_passing ?? '') }}">
+                                                                    value="{{ old('year_of_passing', $postgraduateEducationRecord->year_of_passing ?? '') }}">
                                                                     <div class="invalid-feedback"></div>
                                                             </div>
                                                             <!--end::Input group-->
@@ -2580,7 +2622,7 @@
                                                     <!--end::Modal title-->
                                                     <!--begin::Close-->
                                                     <div class="btn btn-icon btn-sm btn-active-icon-primary"
-                                                        data-kt-users-modal-action="close">
+                                                        data-bs-dismiss="modal">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                                                         <span class="svg-icon svg-icon-1">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -2771,10 +2813,10 @@
                                                         <!--begin::Actions-->
                                                         <div class="text-center pt-15">
                                                             <button type="reset" class="btn btn-light me-3"
-                                                                data-kt-users-modal-action="cancel">Cancel</button>
+                                                            data-bs-dismiss="modal">Cancel</button>
                                                             <button type="submit" class="btn btn-primary"
                                                                 data-kt-users-modal-action="submit">
-                                                                <span class="indicator-label">Submit</span>
+                                                                <span class="indicator-label" data-bs-dismiss="modal">Submit</span>
                                                                 <span class="indicator-progress">Please wait...
                                                                     <span
                                                                         class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -2892,17 +2934,6 @@
                         <!--end::Wrapper-->
                     </div>
                     <!--end::Content-->
-                    <!--begin::Footer-->
-                    <!--<div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
-        
-                        <div class="d-flex flex-center fw-bold fs-6">
-                        <a href="https://keenthemes.com" class="text-muted text-hover-primary px-2" target="_blank">About</a>
-                        <a href="https://devs.keenthemes.com" class="text-muted text-hover-primary px-2" target="_blank">Support</a>
-                        <a href="https://1.envato.market/EA4JP" class="text-muted text-hover-primary px-2" target="_blank">Purchase</a>
-                        </div>
-                    
-                        </div>-->
-                    <!--end::Footer-->
                 </div>
                 <!--end::Body-->
             </div>
@@ -3039,58 +3070,42 @@
 
     <!--begin::Javascript-->
     <!--begin::Global Javascript Bundle(used by all pages)-->
-    <script src="{{ 'frontend/assets/plugins/global/plugins.bundle.js' }}"></script>
-    <script src="{{ 'frontend/assets/js/scripts.bundle.js' }}"></script>
+ 
+
+    <script src="{{ asset('frontend/assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/scripts.bundle.js') }}"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Vendors Javascript(used by this page)-->
-    <script src="{{ 'frontend/assets/plugins/custom/prismjs/prismjs.bundle.js' }}"></script>
-    <script src="{{ 'frontend/assets/plugins/custom/formrepeater/formrepeater.bundle.js' }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ 'frontend/assets/js/custom/documentation/documentation.js' }}"></script>
-    <script src="{{ 'frontend/assets/js/custom/documentation/search.js' }}"></script>
-    <script src="{{ 'frontend/assets/js/custom/documentation/forms/formrepeater/advanced.js' }}"></script>
+    <script src="{{ asset('frontend/assets/js/custom/documentation/documentation.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/custom/documentation/search.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/custom/documentation/forms/formrepeater/advanced.js') }}"></script>
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
 
     {{-- begin: ajax & jquery --}}
 
-  
+    <script src="{{ asset('frontend/assets/js/custom/documentation/search.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/custom/utilities/modals/users-search.js') }}"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
 
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>--}}
-
-    {{-- <!--begin::Page Vendors Javascript(used by this page)-->
-    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <!--end::Page Vendors Javascript--> --}}
-
-    <!--begin::Page Custom Javascript(used by this page)-->
-    {{-- <script src="{{ asset('frontend/assets/js/custom/apps/ecommerce/customers/details/transaction-history.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom/apps/ecommerce/customers/details/add-auth-app.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom/apps/ecommerce/customers/details/add-address.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom/apps/ecommerce/customers/details/add-one-time-password.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom/apps/ecommerce/customers/details/update-password.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom/apps/ecommerce/customers/details/update-phone.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom/apps/ecommerce/customers/details/update-address.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom/apps/ecommerce/customers/details/update-profile.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom/utilities/modals/create-app.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom/utilities/modals/new-card.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom/utilities/modals/users-search.js') }}"></script> --}}
-    <!--end::Page Custom Javascript-->
-
-   
    <!--end::Global Stylesheets Bundle-->
 
-       <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-       
-       <script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script src="{{ asset('frontend/assets/js/mp-custom/candidate/candidate-profile.js') }}"></script>
+
+    <script>
         $(document).ready(function() {
+            $('#state-dropdown').prop('disabled', true);
+            $('#district-dropdown').prop('disabled', true);
+            
             let cropper;
             const image = document.getElementById('image');
             const profilePictureInput = document.getElementById('profile-picture');
@@ -3129,496 +3144,505 @@
                 }
             });
 
-            // Handle crop button click
-            $('#cropButton').on('click', function () {
-                const canvas = cropper.getCroppedCanvas({
-                    width: 200, // Adjust width and height as needed
-                    height: 200,
-                });
-
-                canvas.toBlob(function (blob) {
-                    const croppedImage = new File([blob], 'cropped_image.jpg', { type: 'image/jpeg' });
-
-                    // Replace the input's file with the cropped image
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(croppedImage);
-                    profilePictureInput.files = dataTransfer.files;
-
-                    // Hide the modal
-                    cropModal.hide();
-
-                    // Optional: Update the preview
-                    $('.image-input-wrapper').css('background-image', `url(${canvas.toDataURL()})`);
-                });
+        // Handle crop button click
+        $('#cropButton').on('click', function () {
+            const canvas = cropper.getCroppedCanvas({
+                width: 200, // Adjust width and height as needed
+                height: 200,
             });
 
-// CANDIDATE INFORMATION
-$('#userForm').on('submit', function(event) {
-  event.preventDefault();
+            canvas.toBlob(function (blob) {
+                const croppedImage = new File([blob], 'cropped_image.jpg', { type: 'image/jpeg' });
 
-  const form = $(this);
-  const formData = new FormData(this);
-  formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                // Replace the input's file with the cropped image
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(croppedImage);
+                profilePictureInput.files = dataTransfer.files;
 
-  const candidate_id = $('#candidate_id').val();
+                // Hide the modal
+                cropModal.hide();
 
-  $.ajax({
-      url: `/account/user-profile/${candidate_id}/update`,
-      type: 'POST',
-      data: formData,
-      processData: false, // Prevent jQuery from processing the data
-      contentType: false,
-      dataType: 'json',
-      success: function(response) {
-          if(response.status) {
-              clearValidationErrors(form);
-              displayStatus(response.message);
-          }
-      },
-      error: function(response, xhr) {
-          if(!response.error || xhr.status === 422) {
-              clearValidationErrors(form);
-              const errors = response.responseJSON?.errors;
-              if(errors) {
-                form.find('input, select, textarea').each(function() {
-                      const fieldName = $(this).attr('name');
-                      if(errors[fieldName]) {
-                          $(this).addClass('border border-danger is-invalid');
-                          $(this).next('.invalid-feedback').html(errors[fieldName][0]);
-                      }
-                  });
-
-                  if(errors['gender'] ) {
-                      $('.radio-btn-container').find('.invalid-feedback').html(errors['gender'][0]).show();
-                  }
-                  if(errors['date_of_birth']) {
-                      $('#date_of_birth').addClass('border border-danger is-invalid');
-                      $('#date_of_birth').next('.invalid-feedback').html(errors['date_of_birth'][0]).show();
-                  }
-              }
-          }
-      }
-  });
-});
-
-// FOR STATES DROPDOWN
-$('#country-dropdown').on('change', function () {
-  const country_id = $(this).val(); // Get the selected country ID
-
-  // Clear and disable the state and district dropdowns
-  $('#state-dropdown').html('<option value="">Select State</option>').prop('disabled', true);
-  $('#district-dropdown').html('<option value="">Select District</option>').prop('disabled', true);
-
-  $.ajax({
-      url: "{{ route('states') }}",
-      type: 'POST',
-      data: {
-          '_token': $('meta[name="csrf-token"]').attr('content'), // CSRF token
-          'country_id': country_id // Pass country_id
-      },
-      dataType: 'json',
-      success: function (response) {
-          // Check if states are returned
-          let options = '<option value="">Select State</option>'; // Default option
-
-          if (response.states && response.states.length > 0) {
-              $.each(response.states, function (key, state) {
-                  options += `<option value="${state.state_id}">${state.state_name}</option>`;
-              });
-
-              $('#state-dropdown').html(options).prop('disabled', false); // Enable state dropdown
-              $('#district-dropdown').html('<option value="">Select District</option>').prop('disabled', false);
-          } else {
-              // If no states are returned
-              options += '<option value="">No results found</option>'
-              $('#state-dropdown').html(options).prop('disabled', false);
-          }
-      },
-      error: function () {
-          alert('Failed to fetch states. Please try again later.');
-      },
-  });
-});
-
-// FOR DISTRICTS DROPDOWN
-$('#state-dropdown').on('change', function () {
-  const state_id = $(this).val(); // Get the selected state ID
-
-  $.ajax({
-      url: "{{ route('districts') }}",
-      type: 'POST',
-      data: {
-          '_token': $('meta[name="csrf-token"]').attr('content'), // CSRF token
-          'state_id': state_id  // Pass state_id
-      },
-      dataType: 'json',
-      success: function (response) {
-          // Check if states are returned
-          let options = '<option value="">Select District</option>'; // Default option
-      
-          if (response.districts && response.districts.length > 0) {
-              $.each(response.districts, function (key, district) {
-                  options += `<option value="${district.district_id}">${district.district_name}</option>`;
-              });
-
-              $('#district-dropdown').html(options).prop('disabled', false); // Enable district dropdown
-          } else {
-              // If no districts are returned
-              options += '<option value="">No results found</option>'
-              $('#district-dropdown').html(options).prop('disabled', false);
-          }
-      },
-      error: function () {
-          alert('Failed to fetch states. Please try again later.');
-      },
-  });
-});
-
-
-// PERSONAL INFORMATION
-const inputs = $('#personalInfoForm input');
-const saveButton = $('#saveBtn');
-saveButton.prop('disabled', true);
-
-// Begins::Handles aadhar card spacing
-$('#aadhar_card_no').on('input', function() {
-    $inputVal = $(this).val().replace(/\D/g, ''); // Removes all non-digit characters.
-
-    let formattedValue = '';
-    for(let i = 0; i < $inputVal.length; i++) {
-        if(i > 0 && (i % 4 === 0)) {
-            formattedValue += ' ';
-        }
-
-        formattedValue += $inputVal[i];
-    }
-
-    $(this).val(formattedValue);
-});
-// Ends::Handles aadhar card spacing
-
-// check all inputs
-inputs.on('input', function() {
-  checkInputs();
-});
-
-function checkInputs() {
-  let filled = false;
-  inputs.each((index, input) => {
-      const $inputElem = $(input); // Converts the raw DOM element into jquery object.
-      if($inputElem.val().trim() !== '') {
-          filled = true;
-          return false;
-      }
-  });
-
-  saveButton.prop('disabled', !filled);
-}
-
-$('#personalInfoForm').on('submit', function(event) {
-  event.preventDefault();
-
-  const candidateId = $('#candidate_id').val();
-  const url = "{{ route('personal-info.candidate', ['candidate_id' => ':candidate_id']) }}".replace(':candidate_id', candidateId); // replace method to avoid laravel interpretation it as a string literal
-    
-  const form = $(this);
-  let formData = new FormData(this); // Form data, including the CSRF token
-  formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-
-  let messageTimeout;
-  $.ajax({
-      url: url,
-      type: 'POST',
-      data: formData,
-      contentType: false,
-      processData: false,
-      dataType: 'json',
-      success: function(response) {
-          clearTimeout(messageTimeout);
-          if(response.status) {
-              clearValidationErrors(form);
-              displayStatus(response.message);
-          }
-      },
-      error: function(response, xhr) {
-          if(!response.error || xhr.status === 442) {
-              clearValidationErrors(form);
-              const errors = response.responseJSON?.errors;
-              if(errors) {
-                  form.find('input').each(function() {
-                      const fieldName = $(this).attr('name');
-                      if(errors[fieldName]) {
-                          $(this).addClass('border border-danger is-invalid');
-                          $(this).next('.invalid-feedback').html(errors[fieldName][0]);
-                      }
-                  });
-                 
-              }
-          }
-      }
-  });
-});
-
-$('#grade_tenth_form').on('submit', function(event) {
-    event.preventDefault();
-
-    const candidateId = $('#candidate_id').val();
-    const url = "{{ route('tenth-grade-info.candidate', ['candidate_id' => ':candidate_id']) }}".replace(':candidate_id', candidateId);
-
-    const form = $(this);
-    let formData = new FormData(this);
-    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-
-    let messageTimeout;
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        success: function(response) {
-            clearTimeout(messageTimeout);
-            if(response.status) {
-                clearValidationErrors(form);
-                displayStatus(response.message);
-            }
-        },
-        error: function(response, xhr) {
-            clearTimeout(messageTimeout);
-           if(!response.error || xhr.status === 422) {
-                clearValidationErrors(form);
-                const errors = response.responseJSON?.errors;
-                if(errors) {
-                    form.find('input, select').each(function() {
-                      const fieldName = $(this).attr('name');
-                      if(errors[fieldName]) {
-                          $(this).addClass('border border-danger is-invalid');
-                          $(this).next('.invalid-feedback').html(errors[fieldName][0]);
-                      }
-                  });
-                }
-            }
-        }
-    });
-});
-
-$('#grade_twelfth_form').on('submit', function(event) {
-    event.preventDefault();
-
-    const candidateId = $('#candidate_id').val();
-    const url = "{{ route('twelfth-grade-info.candidate', ['candidate_id' => ':candidate_id']) }}".replace(':candidate_id', candidateId);
-
-    const form = $(this);
-    let formData = new FormData(this);
-    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-
-    let messageTimeout;
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        success: function(response) {
-            clearTimeout(messageTimeout);
-            if(response.status) {
-                clearValidationErrors(form);
-                displayStatus(response.message);
-            }
-        },
-        error: function(response, xhr) {
-            clearTimeout(messageTimeout);
-           if(!response.error || xhr.status === 422) {
-                clearValidationErrors(form);
-                const errors = response.responseJSON?.errors;
-                if(errors) {
-                    form.find('input, select').each(function() {
-                      const fieldName = $(this).attr('name');
-                      if(errors[fieldName]) {
-                          $(this).addClass('border border-danger is-invalid');
-                          $(this).next('.invalid-feedback').html(errors[fieldName][0]);
-                      }
-                  });
-                }
-            }
-        }
-    });
-});
-$('#higher_education_form').on('submit', function(event) {
-    event.preventDefault();
-
-    const candidateId = $('#candidate_id').val();
-    const url = "{{ route('higher-education-info.candidate', ['candidate_id' => ':candidate_id']) }}".replace(':candidate_id', candidateId);
-
-    const form = $(this);
-    let formData = new FormData(this);
-    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-
-    let messageTimeout;
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        success: function(response) {
-            clearTimeout(messageTimeout);
-            if(response.status) {
-                clearValidationErrors(form);
-                displayStatus(response.message);
-            }
-        },
-        error: function(response, xhr) {
-            clearTimeout(messageTimeout);
-            if(!response.error || xhr.status === 422) {
-                clearValidationErrors(form);
-                const errors = response.responseJSON?.errors;
-                if(errors) {
-                    form.find('input').each(function() {
-                      const fieldName = $(this).attr('name');
-                      if(errors[fieldName]) {
-                          $(this).addClass('border border-danger is-invalid');
-                          $(this).next('.invalid-feedback').html(errors[fieldName][0]);
-                      }
-                  });
-                }
-            }
-        }
-    });
-});
-
-// BEGINS::MASTERS & DOCTORATE
-$('#masters_doctorate_form').on('submit', function(event) {
-    event.preventDefault();
-
-    const candidateId = $('#candidate_id').val();
-    const url = "{{ route('masters-doctorate-info.candidate', ['candidate_id' => ':candidate_id']) }}".replace(':candidate_id', candidateId);
-
-    const form = $(this);
-    let formData = new FormData(this);
-    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-
-    let messageTimeout;
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        success: function(response) {
-            clearTimeout(messageTimeout);
-            if(response.status) {
-                clearValidationErrors(form);
-                displayStatus(response.status);
-            }
-        },
-        error: function(response, xhr) {
-            clearTimeout(messageTimeout);
-            if(!response.error || xhr.status === 422) {
-                clearValidationErrors(form);
-                const errors = response.responseJSON?.errors;
-                if(errors) {
-                    form.find('input, select').each(function() {
-                      const fieldName = $(this).attr('name');
-                      if(errors[fieldName]) {
-                          $(this).addClass('border border-danger is-invalid');
-                          $(this).next('.invalid-feedback').html(errors[fieldName][0]);
-                      }
-                  });
-                }
-            }
-        }
-    });
-});
-// ENDS::MASTERS & DOCTORATE
-
-// BEGINS::EXPERIENCE INFORMATION
-$('#experience_form').on('submit', function(event) {
-    event.preventDefault();
-
-    const candidateId = $('#candidate_id').val();
-    const url = "{{ route('experience-info.candidate', ['candidate_id' => ':candidate_id']) }}".replace(':candidate_id', candidateId);
-
-    const form = $(this);
-    let formData = new FormData(this);
-    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-
-    let messageTimeout;
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        success: function(response) {
-            clearTimeout(messageTimeout);
-            if(response.status) {
-                clearValidationErrors(form);
-                displayStatus(response.message);
-            }
-        },
-        error: function(response, xhr) {
-            clearTimeout(messageTimeout);
-           if(!response.error || xhr.status === 422) {
-                clearValidationErrors(form);
-                const errors = response.responseJSON?.errors;
-                if(errors) {
-                    form.find('input').each(function() {
-                      const fieldName = $(this).attr('name');
-                      if(errors[fieldName]) {
-                          $(this).addClass('border border-danger is-invalid');
-                          $(this).next('.invalid-feedback').html(errors[fieldName][0]);
-                      }
-                  });
-                }
-            }
-        }
-    });
-});
-// ENDS::EXPERIENCE INFORMATION
-
-});
-
-function displayStatus(response) {
-    
-    if (response) {
-        $('.status')
-            .removeClass('alert-danger d-flex')
-            .addClass('alert alert-success d-flex')
-            .text(response)
-            .fadeIn();
-    } else {
-        $('.status')
-            .removeClass('alert-success d-flex')
-            .addClass('alert alert-danger d-flex')
-            .text('An error occurred. Please try again.')
-            .fadeIn();
-    }
-
-    // Automatically fade out after 5 seconds
-    setTimeout(function () {
-        $('.status').fadeOut(function () {
-            $(this).text('');
-            $(this).removeClass('d-flex');
-            $(this).addClass('d-none');
+                // Optional: Update the preview
+                $('.image-input-wrapper').css('background-image', `url(${canvas.toDataURL()})`);
+            });
         });
-    }, 5000);
-}
+
+        // CANDIDATE INFORMATION
+        $('#userForm').on('submit', function(event) {
+        event.preventDefault();
+
+        const form = $(this);
+        const formData = new FormData(this);
+        formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+
+        const candidate_id = $('#candidate_id').val();
+
+        $.ajax({
+            url: `/account/user-profile/${candidate_id}/update`,
+            type: 'POST',
+            data: formData,
+            processData: false, // Prevent jQuery from processing the data
+            contentType: false,
+            dataType: 'json',
+            success: function(response) {
+                if(response.status) {
+                    clearValidationErrors(form);
+                    displayStatus(response.message);
+                }
+            },
+            error: function(response, xhr) {
+                if(!response.error || xhr.status === 422) {
+                    clearValidationErrors(form);
+                    const errors = response.responseJSON?.errors;
+                    if(errors) {
+                        form.find('input, select, textarea').each(function() {
+                            const fieldName = $(this).attr('name');
+                            if(errors[fieldName]) {
+                                $(this).addClass('border border-danger is-invalid');
+                                $(this).next('.invalid-feedback').html(errors[fieldName][0]);
+                            }
+                        });
+
+                        if(errors['gender'] ) {
+                            $('.radio-btn-container').find('.invalid-feedback').html(errors['gender'][0]).show();
+                        }
+                        if(errors['date_of_birth']) {
+                            $('#date_of_birth').addClass('border border-danger is-invalid');
+                            $('#date_of_birth').next('.invalid-feedback').html(errors['date_of_birth'][0]).show();
+                        }
+                    }
+                }
+            }
+        });
+        });
+
+        // FOR STATES DROPDOWN
+        $('#country-dropdown').on('change', function () {
+        const country_id = $(this).val(); // Get the selected country ID
+
+        // Clear and disable the state and district dropdowns
+        $('#state-dropdown').html('<option value="">Select State</option>').prop('disabled', true).trigger();
+        $('#district-dropdown').html('<option value="">Select District</option>').prop('disabled', true).trigger();
+
+        $.ajax({
+            url: "{{ route('states') }}",
+            type: 'POST',
+            data: {
+                '_token': $('meta[name="csrf-token"]').attr('content'), // CSRF token
+                'country_id': country_id // Pass country_id
+            },
+            dataType: 'json',
+            success: function (response) {
+                // Check if states are returned
+                let options = '<option value="">Select State</option>'; // Default option
+
+                if (response.states && response.states.length > 0) {
+                    $.each(response.states, function (key, state) {
+                        options += `<option value="${state.state_id}">${state.state_name}</option>`;
+                    });
+
+                    $('#state-dropdown').html(options).prop('disabled', false); // Enable state dropdown
+                    $('#district-dropdown').html('<option value="">Select District</option>').prop('disabled', false);
+                } else {
+                    // If no states are returned
+                    options += '<option value="">No results found</option>'
+                    $('#state-dropdown').html(options).prop('disabled', false);
+                }
+            },
+            error: function () {
+                alert('Failed to fetch states. Please try again later.');
+            },
+        });
+        });
+
+        // FOR DISTRICTS DROPDOWN
+        $('#state-dropdown').on('change', function () {
+        const state_id = $(this).val(); // Get the selected state ID
+
+        $.ajax({
+            url: "{{ route('districts') }}",
+            type: 'POST',
+            data: {
+                '_token': $('meta[name="csrf-token"]').attr('content'), // CSRF token
+                'state_id': state_id  // Pass state_id
+            },
+            dataType: 'json',
+            success: function (response) {
+                // Check if states are returned
+                let options = '<option value="">Select District</option>'; // Default option
+            
+                if (response.districts && response.districts.length > 0) {
+                    $.each(response.districts, function (key, district) {
+                        options += `<option value="${district.district_id}">${district.district_name}</option>`;
+                    });
+
+                    $('#district-dropdown').html(options).prop('disabled', false); // Enable district dropdown
+                } else {
+                    // If no districts are returned
+                    options += '<option value="">No results found</option>'
+                    $('#district-dropdown').html(options).prop('disabled', false);
+                }
+            },
+            error: function () {
+                alert('Failed to fetch states. Please try again later.');
+            },
+        });
+        });
+
+        // PERSONAL INFORMATION
+        const inputs = $('#personalInfoForm input');
+        const saveButton = $('#saveBtn');
+        saveButton.prop('disabled', true);
+
+        // Begins::Handles aadhar card spacing
+        $('#aadhar_card_no').on('input', function() {
+            $inputVal = $(this).val().replace(/\D/g, ''); // Removes all non-digit characters.
+
+            let formattedValue = '';
+            for(let i = 0; i < $inputVal.length; i++) {
+                if(i > 0 && (i % 4 === 0)) {
+                    formattedValue += ' ';
+                }
+
+                formattedValue += $inputVal[i];
+            }
+
+            $(this).val(formattedValue);
+        });
+        // Ends::Handles aadhar card spacing
+
+        // check all inputs
+        inputs.on('input', function() {
+        checkInputs();
+        });
+
+        function checkInputs() {
+        let filled = false;
+        inputs.each((index, input) => {
+            const $inputElem = $(input); // Converts the raw DOM element into jquery object.
+            if($inputElem.val().trim() !== '') {
+                filled = true;
+                return false;
+            }
+        });
+
+        saveButton.prop('disabled', !filled);
+        }
 
 
-function clearValidationErrors(form) {
-  form.find('input, textarea, select').removeClass('is-invalid border border-danger');
-  form.find('.invalid-feedback').html('');
-}
 
-       </script>
+        $('#personalInfoForm').on('submit', function(event) {
+        event.preventDefault();
 
-       <script>
+        const candidateId = $('#candidate_id').val();
+        const url = "{{ route('personal-info.candidate', ['candidate_id' => ':candidate_id']) }}".replace(':candidate_id', candidateId); // replace method to avoid laravel interpretation it as a string literal
+            
+        const form = $(this);
+        let formData = new FormData(this); // Form data, including the CSRF token
+        formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+
+        let messageTimeout;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(response) {
+                clearTimeout(messageTimeout);
+                if(response.status) {
+                    clearValidationErrors(form);
+                    displayStatus(response.message);
+                }
+            },
+            error: function(response, xhr) {
+                if(!response.error || xhr.status === 442) {
+                    clearValidationErrors(form);
+                    const errors = response.responseJSON?.errors;
+                    if(errors) {
+                        form.find('input').each(function() {
+                            const fieldName = $(this).attr('name');
+                            if(errors[fieldName]) {
+                                $(this).addClass('border border-danger is-invalid');
+                                $(this).next('.invalid-feedback').html(errors[fieldName][0]);
+                            }
+                        });
+                        
+                    }
+                }
+            }
+        });
+        });
+
+        $('#grade_tenth_form').on('submit', function(event) {
+            event.preventDefault();
+
+            const candidateId = $('#candidate_id').val();
+            const educationId = $('#tenth_education_id').val();
+            const url = "{{ route('tenth-grade-info.candidate', ['candidate_id' => ':candidate_id']) }}".replace(':candidate_id', candidateId);
+
+            const form = $(this);
+            let formData = new FormData(this);
+            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+
+            let messageTimeout;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    clearTimeout(messageTimeout);
+                    if(response.status) {
+                        clearValidationErrors(form);
+                        displayStatus(response.message);
+                    }
+                },
+                error: function(response, xhr) {
+                    clearTimeout(messageTimeout);
+                if(!response.error || xhr.status === 422) {
+                        clearValidationErrors(form);
+                        const errors = response.responseJSON?.errors;
+                        if(errors) {
+                            form.find('input, select').each(function() {
+                            const fieldName = $(this).attr('name');
+                            if(errors[fieldName]) {
+                                $(this).addClass('border border-danger is-invalid');
+                                $(this).next('.invalid-feedback').html(errors[fieldName][0]);
+                            }
+                        });
+                        }
+                    }
+                }
+            });
+        });
+
+        $('#grade_twelfth_form').on('submit', function(event) {
+            event.preventDefault();
+
+            const candidateId = $('#candidate_id').val();
+            const educationId = $('#twelfth_education_id').val();
+
+            const url = "{{ route('twelfth-grade-info.candidate', ['candidate_id' => ':candidate_id']) }}".replace(':candidate_id', candidateId);
+
+            const form = $(this);
+            let formData = new FormData(this);
+            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+
+            let messageTimeout;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    clearTimeout(messageTimeout);
+                    if(response.status) {
+                        clearValidationErrors(form);
+                        displayStatus(response.message);
+                    }
+                },
+                error: function(response, xhr) {
+                    clearTimeout(messageTimeout);
+                if(!response.error || xhr.status === 422) {
+                        clearValidationErrors(form);
+                        const errors = response.responseJSON?.errors;
+                        if(errors) {
+                            form.find('input, select').each(function() {
+                            const fieldName = $(this).attr('name');
+                            if(errors[fieldName]) {
+                                $(this).addClass('border border-danger is-invalid');
+                                $(this).next('.invalid-feedback').html(errors[fieldName][0]);
+                            }
+                        });
+                        }
+                    }
+                }
+            });
+        });
+
+        $('#higher_education_form').on('submit', function(event) {
+            event.preventDefault();
+
+            const candidateId = $('#candidate_id').val();
+            const educationId = $('#higher_education_id').val();
+
+            const url = "{{ route('higher-education-info.candidate', ['candidate_id' => ':candidate_id']) }}".replace(':candidate_id', candidateId);
+
+            const form = $(this);
+            let formData = new FormData(this);
+            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+
+            let messageTimeout;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    clearTimeout(messageTimeout);
+                    if(response.status) {
+                        clearValidationErrors(form);
+                        displayStatus(response.message);
+                    }
+                },
+                error: function(response, xhr) {
+                    clearTimeout(messageTimeout);
+                    if(!response.error || xhr.status === 422) {
+                        clearValidationErrors(form);
+                        const errors = response.responseJSON?.errors;
+                        if(errors) {
+                            form.find('input').each(function() {
+                            const fieldName = $(this).attr('name');
+                            if(errors[fieldName]) {
+                                $(this).addClass('border border-danger is-invalid');
+                                $(this).next('.invalid-feedback').html(errors[fieldName][0]);
+                            }
+                        });
+                        }
+                    }
+                }
+            });
+        });
+
+        // BEGINS::MASTERS & DOCTORATE
+        $('#masters_doctorate_form').on('submit', function(event) {
+            event.preventDefault();
+
+            const candidateId = $('#candidate_id').val();
+            const educationId = $('#postgraduate_education_id').val();
+
+            const url = "{{ route('masters-doctorate-info.candidate', ['candidate_id' => ':candidate_id']) }}".replace(':candidate_id', candidateId);
+
+            const form = $(this);
+            let formData = new FormData(this);
+            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+
+            let messageTimeout;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    clearTimeout(messageTimeout);
+                    if(response.status) {
+                        clearValidationErrors(form);
+                        displayStatus(response.status);
+                    }
+                },
+                error: function(response, xhr) {
+                    clearTimeout(messageTimeout);
+                    if(!response.error || xhr.status === 422) {
+                        clearValidationErrors(form);
+                        const errors = response.responseJSON?.errors;
+                        if(errors) {
+                            form.find('input, select').each(function() {
+                            const fieldName = $(this).attr('name');
+                            if(errors[fieldName]) {
+                                $(this).addClass('border border-danger is-invalid');
+                                $(this).next('.invalid-feedback').html(errors[fieldName][0]);
+                            }
+                        });
+                        }
+                    }
+                }
+            });
+        });
+        // ENDS::MASTERS & DOCTORATE
+
+        // BEGINS::EXPERIENCE INFORMATION
+        $('#experience_form').on('submit', function(event) {
+            event.preventDefault();
+
+            const candidateId = $('#candidate_id').val();
+            const url = "{{ route('experience-info.candidate', ['candidate_id' => ':candidate_id']) }}".replace(':candidate_id', candidateId);
+
+            const form = $(this);
+            let formData = new FormData(this);
+            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+
+            let messageTimeout;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    clearTimeout(messageTimeout);
+                    if(response.status) {
+                        clearValidationErrors(form);
+                        displayStatus(response.message);
+                    }
+                },
+                error: function(response, xhr) {
+                    clearTimeout(messageTimeout);
+                if(!response.error || xhr.status === 422) {
+                        clearValidationErrors(form);
+                        const errors = response.responseJSON?.errors;
+                        if(errors) {
+                            form.find('input').each(function() {
+                            const fieldName = $(this).attr('name');
+                            if(errors[fieldName]) {
+                                $(this).addClass('border border-danger is-invalid');
+                                $(this).next('.invalid-feedback').html(errors[fieldName][0]);
+                            }
+                        });
+                        }
+                    }
+                }
+            });
+        });
+        // ENDS::EXPERIENCE INFORMATION
+
+        });
+
+        function displayStatus(response) {
+            
+            if (response) {
+                $('.status')
+                    .removeClass('alert-danger d-flex')
+                    .addClass('alert alert-success d-flex')
+                    .text(response)
+                    .fadeIn();
+            } else {
+                $('.status')
+                    .removeClass('alert-success d-flex')
+                    .addClass('alert alert-danger d-flex')
+                    .text('An error occurred. Please try again.')
+                    .fadeIn();
+            }
+
+            // Automatically fade out after 5 seconds
+            setTimeout(function () {
+                $('.status').fadeOut(function () {
+                    $(this).text('');
+                    $(this).removeClass('d-flex');
+                    $(this).addClass('d-none');
+                });
+            }, 5000);
+        }
+
+
+        function clearValidationErrors(form) {
+        form.find('input, textarea, select').removeClass('is-invalid border border-danger');
+        form.find('.invalid-feedback').html('');
+        }
+    </script>
+
+
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Get all stepper items
             var stepperItems = document.querySelectorAll('.stepper-item');
@@ -3637,567 +3661,6 @@ function clearValidationErrors(form) {
             });
         });
     </script>
-    {{-- <script>
-        $(document).ready(function() {
-
-            // BEGIN::SETS A TIMEOUT TO HIDE THE ALERT MESSAGES AFTER 5 SECONDS
-            setTimeout(function() {
-                $('#alert-message1, #alert-message2').fadeOut(); // Fade out both alert messages
-            }, 5000);
-            // END::SETS A TIMEOUT TO HIDE THE ALERT MESSAGES AFTER 5 SECONDS
-
-            // BEGIN::SHOW FORM SUBMISSION STATUS
-            function showMessage(formType, type, message) {
-                const formTypes = [
-                    'personal-info', '10th', '12th', 'higher-education',
-                    'postgraduate', 'personal-medical-history', 'family-medical-history', 'experience-form'
-                ];
-
-                if (formTypes.includes(formType)) {
-                    const messageSelector = `#${type}-message-${formType}`;
-                    $(messageSelector).text(message).fadeIn();
-
-                    setTimeout(() => {
-                        $(messageSelector).fadeOut();
-                    }, 5000);
-                }
-            }
-            // END::SHOW FORM SUBMISSION STATUS
-
-            // BEGIN::AJAX FOR FETCHING DEPENDENT DROPDOWN DATA
-            // Begin::States Dropdown Data Fetching
-            $('#country-dropdown').on('change', function() {
-                const countryId = $(this).val();
-
-                $.ajax({
-                    url: "{{ route('states') }}", // Fetch states route
-                    type: 'GET',
-                    data: {
-                        country_id: countryId,
-                        _token: "{{ csrf_token() }}" // CSRF token
-                    },
-                    dataType: "json",
-                    success: function(states) {
-                        let options = '<option selected>Select State</option>';
-                        $.each(states, function(key, state) {
-                            options +=
-                                `<option value="${state.state_id}">${state.state_name}</option>`;
-                        });
-                        $('#state-dropdown').html(options);
-                    },
-                    error: function(error) {
-                        console.error(error);
-                        // alert('Error fetching states');
-                    }
-                });
-            });
-            // End::States Dropdown Data Fetching
-
-            // Begin::Districts Dropdown Data Fetching
-            $('#state-dropdown').on('change', function() {
-                const stateId = $(this).val();
-
-                $.ajax({
-                    url: "{{ route('districts') }}", // Fetch districts route
-                    type: 'POST',
-                    data: {
-                        state_id: stateId,
-                        _token: "{{ csrf_token() }}" // CSRF token
-                    },
-                    success: function(districts) {
-                        let options = '<option selected>Select District</option>';
-                        $.each(districts, function(key, district) {
-                            options +=
-                                `<option value="${district.district_id}">${district.district_name}</option>`;
-                        });
-                        $('#district-dropdown').html(options);
-                    },
-                    error: function(error) {
-                        alert('Error fetching districts');
-                    }
-                });
-            });
-            // End::Districts Dropdown Data Fetching
-            // END::AJAX FOR FETCHING DEPENDENT DROPDOWN DATA
-
-            // BEGIN::HANDLE CANDIDATE INFORMATION FORM SUBMISSION
-            $('#userForm').on('submit', function(e) {
-                e.preventDefault();
-                console.log('Form submission prevented');
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                const formData = new FormData(this);
-
-                $.ajax({
-                    url: "{{ route('update-profile') }}",
-                    type: "POST",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        console.log(response.status);
-                        console.log('Success');
-
-                        // Clear previous error messages
-                        handleFormErrors();
-
-                        if (response.status === true) {
-                            // Success logic
-                            $('#successMessage').text('Profile updated successfully!').show();
-                            setTimeout(function() {
-                                $('#successMessage').fadeOut('slow');
-                            }, 3000);
-                        } else if (response.errors) {
-                            // Handle the case where validation failed
-                            handleFormErrors(response.errors);
-                        }
-                    },
-                    error: function(xhr) {
-                        console.log('Error');
-
-                        console.error('An error occurred:', xhr.statusText);
-                        console.error('Check:', xhr.responseText);
-
-                        // Handle specific status codes
-                        switch (xhr.status) {
-                            case 404:
-                                alert('Requested resource not found.');
-                                break;
-                            case 422:
-                                console.error('Validation errors:', xhr.responseJSON.errors);
-                                handleFormErrors(xhr.responseJSON.errors);
-                                break;
-                            case 500:
-                                console.error('Current error', xhr.responseText);
-                                alert('Server error, please try again later.');
-                                break;
-                            default:
-                                alert('An unexpected error occurred. Please try again.');
-                        }
-                    }
-                });
-            });
-            // END::HANDLE CANDIDATE INFORMATION FORM SUBMISSION
-
-            // BEGIN::HANDLE FORM SUBMISSION ERRORS FOR USER PROFILE FORM
-            function handleFormErrors(errors) {
-                const fields = ['fname', 'lname', 'date_of_birth', 'email', 'gender', 'country', 'phone_no'];
-
-                fields.forEach(function(field) {
-                    const $field = $("#" + field);
-                    const errorMessage = errors ? errors[field] || '' : '';
-
-                    if (errorMessage) {
-                        $field.addClass('is-invalid')
-                            .siblings('p')
-                            .addClass('invalid-feedback')
-                            .html(errorMessage);
-                    } else {
-                        $field.removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('');
-                    }
-                });
-            }
-            // END::HANDLE FORM SUBMISSION ERRORS FOR USER PROFILE FORM
-
-
-
-
-            // BEGIN::HANDLE PERSONAL INFO FORM SUBMISSION
-
-            const $inputs = $('#personal_info_form input');
-            console.log($inputs);
-            const $saveButton = $('#saveBtn');
-
-            $saveButton.prop('disabled', true);
-
-            function checkInputs() {
-                let filled = false;
-
-                $inputs.each(function() {
-                    if ($(this).val().trim() !== '') {
-                        filled = true;
-                        return false;
-                    }
-                });
-
-                $saveButton.prop('disabled', !filled);
-            }
-
-            $inputs.on('input', function() {
-                checkInputs();
-            });
-
-
-
-            $('#personal_info_form').on('submit', function(e) {
-                e.preventDefault();
-
-                let formData = new FormData(this);
-
-                $.ajax({
-                    url: "{{ route('personal-info') }}",
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        // formsSubmitted.personal_info = true;
-                        clearErrors();
-                        // Handle success response for personal-info
-                        showMessage('personal-info', 'success', response.message);
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle error for personal-info form
-                        if (xhr.status === 422) {
-                            const errors = xhr.responseJSON.errors;
-                            displayFormValidationErrors('personal-info', errors);
-                        } else {
-                            showMessage('personal-info', 'error',
-                                'Something went wrong. Please try again.');
-                        }
-                    }
-                });
-            });
-
-
-            // END::HANDLE PERSONAL INFO FORM SUBMISSION
-
-            // BEGIN::HANDLE EDUCATIONAL INFORMATION
-
-            // Handle Grade 10 form submission
-            $('#grade_tenth_form').on('submit', function(e) {
-                e.preventDefault();
-
-                let formData = new FormData(this);
-
-                $.ajax({
-                    url: "{{ route('education-info.tenth-grade') }}",
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        // formsSubmitted.grade_tenth = true;
-                        clearErrors();
-                        // Handle success response for Grade 10
-                        showMessage('10th', 'success', response.message);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('check', xhr.responseText);
-                        // console.error(errors);
-                        if (xhr.status === 422) {
-                            const errors = xhr.responseJSON.errors;
-                            displayFormValidationErrors('10th', errors);
-                        } else {
-                            showMessage('10th', 'error',
-                                'Something went wrong. Please try again.');
-                        }
-                        // Handle error for Grade 10 form
-
-                    }
-                });
-            });
-
-            // Handle Grade 12 form submission
-            $('#grade_twelfth_form').on('submit', function(e) {
-                e.preventDefault();
-
-                let formData = new FormData(this);
-
-                $.ajax({
-                    url: "{{ route('education-info.twelfth-grade') }}",
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        // formsSubmitted.grade_twelfth = true;
-                        clearErrors();
-                        // Handle success response for Grade 12
-                        showMessage('12th', 'success', response.message);
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle error for Grade 12 form
-                        if (xhr.status === 422) {
-                            const errors = xhr.responseJSON.errors;
-                            displayFormValidationErrors('12th', errors);
-                        } else {
-                            showMessage('12th', 'error',
-                                'Something went wrong. Please try again.');
-                        }
-                    }
-                });
-            });
-
-            // Handle Higher Education form submission
-            $('#higher_education_form').on('submit', function(e) {
-                e.preventDefault();
-
-                let formData = new FormData(this);
-
-                $.ajax({
-                    url: "{{ route('education-info.higher-education') }}",
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        // formsSubmitted.higher_education = true;
-                        clearErrors();
-                        // Handle success response for higher education
-                        showMessage('higher-education', 'success', response.message);
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle error for higher education form
-                        // console.error(xhr.responseText);
-                        if (xhr.status === 422) {
-                            const errors = xhr.responseJSON.errors;
-                            console.error(errors);
-                            displayFormValidationErrors('higher-education', errors);
-                        } else {
-                            showMessage('higher-education', 'error',
-                                'Something went wrong. Please try again.');
-                        }
-
-                    }
-                });
-            });
-
-            // Handle masters and doctorate form submission
-            $('#masters_doctorate_form').on('submit', function(e) {
-                e.preventDefault();
-
-                let formData = new FormData(this);
-
-                $.ajax({
-                    url: "{{ route('education-info.postgraduate-info') }}",
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        // formsSubmitted.masters = true;
-                        clearErrors();
-                        // Handle success response for post graduate
-                        showMessage('postgraduate', 'success', response.message);
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle error for post graduate form
-                        if (xhr.status === 422) {
-                            const errors = xhr.responseJSON.errors;
-                            displayFormValidationErrors('postgraduate-info', errors);
-                        } else {
-                            showMessage('postgraduate-info', 'error',
-                                'Something went wrong. Please try again.');
-                        }
-                    }
-                });
-            });
-
-            // END::HANDLE EDUCATIONAL INFORMATION
-
-            // BEGIN::HANDLE MEDICAL HISTORY FORMS
-
-            // Handle personal medical history form submission
-            $('#personal_medical_form').on('submit', function(e) {
-                e.preventDefault();
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
-                });
-
-                let formData = new FormData(this);
-
-                $.ajax({
-                    url: "{{ route('medical-history.personal-medical-info') }}",
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        // formsSubmitted.personalMedicalInfo = true;
-                        clearErrors();
-                        // Handle success response for personal medical history
-                        showMessage('personal-medical-history', 'success', response.message);
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle error for personal medical history form
-                        console.error(xhr.responseText);
-                        if (xhr.status === 422) {
-                            const errors = xhr.responseJSON.errors;
-                            // console.error(errors);
-                            // console.error('check', errors);
-                            displayFormValidationErrors('personal-medical-history', errors);
-                        } else {
-                            showMessage('personal-medical-history', 'error',
-                                'Something went wrong. Please try again.');
-                        }
-                    }
-                });
-            });
-
-            // Handle family medical history form submission
-            $('#family_medical_form').on('submit', function(e) {
-                e.preventDefault();
-
-                let formData = new FormData(this);
-
-                $.ajax({
-                    url: "{{ route('medical-history.family-medical-info') }}",
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        // formsSubmitted.familyMedicalInfo = true;
-                        clearErrors();
-                        // Handle success response for family medical history
-                        showMessage('family-medical-history', 'success', response.message);
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle error for family medical history form
-                        if (xhr.status === 422) {
-                            const errors = xhr.responseJSON.errors;
-                            displayFormValidationErrors('family-medical-history', errors);
-                        } else {
-                            showMessage('family-medical-history', 'error',
-                                'Something went wrong. Please try again.');
-                        }
-                    }
-                });
-            });
-
-            // END::HANDLE MEDICAL HISTORY FORMS
-
-            // BEGIN::HANDLE EXPERIENCE FORM
-            // Handle experience form form submission
-            $('#experience-form').on('submit', function(e) {
-                e.preventDefault();
-
-                let formData = new FormData(this);
-
-                $.ajax({
-                    url: "{{ route('work-experience.update') }}",
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        // formsSubmitted.familyMedicalInfo = true;
-                        clearErrors();
-                        // Handle success response for experience form
-                        showMessage('experience-form', 'success', response.message);
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle error for experience form
-                        console.error(xhr.responseText);
-                        if (xhr.status === 422) {
-                            const errors = xhr.responseJSON.errors;
-                            displayFormValidationErrors('experience-form', errors);
-                        } else {
-                            showMessage('experience-form', 'error',
-                                'Something went wrong. Please try again.');
-                        }
-                    }
-                });
-            });
-            // END::HANDLE EXPERIENCE FORM
-
-            // document.getElementById('kt_users_delete').addEventListener('click', function () {
-            //     // Delete action (AJAX request to delete data from the server)
-            //     const confirmDelete = confirm('Are you sure you want to delete this work experience?');
-            //     if (confirmDelete) {
-            //         const formData = new FormData(document.getElementById('experience-form'));
-
-            //         fetch("/account/delete-work-experience", { // Route for deletion
-            //             method: 'DELETE',
-            //             headers: {
-            //                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            //                 'Content-Type': 'application/json'
-
-            //             },
-            //             body: formData
-            //         })
-            //         .then(response => response.json())
-            //         .then(data => {
-            //             if (data.success) {
-            //                 alert('Work experience deleted successfully');
-            //                 document.getElementById('experience-form').reset(); // Reset form
-            //             } else {
-            //                 alert('An error occurred while deleting.');
-            //             }
-            //         })
-            //         .catch(error => console.error('Error:', error));
-            //     }
-            // });
-
-
-            // BEGIN - HANDLE FORM VALIDATIONS ERRORS
-
-            function displayFormValidationErrors(formType, errors) {
-                clearErrors();
-
-                $.each(errors, function(inputName, errorMessage) {
-                    let inputError = $(`#error-${formType}-${inputName}`);
-                    if (inputError.length) {
-                        inputError.text(errorMessage[0]).fadeIn();
-                    }
-                });
-            }
-
-            function clearErrors() {
-                $('.input-error').fadeOut().text('');
-            }
-
-            // END - HANDLE FORM VALIDATIONS ERRORS
-
-
-        })
-    </script> --}}
-    {{-- end: ajax & jquery --}}
-    {{-- HANDLES AADHAR CARD FORMAT --}}
-    {{-- <script>
-        // Add the event listener when the DOM is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            const aadharInput = document.getElementById('aadhar_card_no');
-
-            aadharInput.addEventListener('input', function() {
-                let value = aadharInput.value.replace(/\D/g, ''); // Remove all non-digit characters
-
-                // If the length is greater than 12, truncate it
-                if (value.length > 12) {
-                    value = value.substring(0, 12);
-                }
-
-                // Format: "1234 5678 9012"
-                let formattedValue = '';
-                for (let i = 0; i < value.length; i++) {
-                    if (i > 0 && (i % 4 === 0)) {
-                        formattedValue += ' '; // Add space after every 4 digits
-                    }
-                    formattedValue += value[i];
-                }
-
-                aadharInput.value = formattedValue; // Set the formatted value back to the input field
-            });
-        });
-    </script> --}}
-    {{-- HANDLES AADHAR CARD FORMAT --}}
-
-    <!--end::Global Javascript Bundle-->
-    <!--begin::Page Vendors Javascript(used by this page)-->
-    {{-- <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script> --}}
-    <!--end::Page Vendors Javascript-->
 
     <script>
         document.getElementById('candidateStep').addEventListener('click', function() {
@@ -4219,12 +3682,14 @@ function clearValidationErrors(form) {
         });
     </script>
 
+ <!--dropdown search box-->
+ <script>
+    $(document).ready(function () {
+    //change selectboxes to selectize mode to be searchable
+    $("#country-dropdown").select2();
+    });
+</script>
     <!--dropdown search box-->
-    {{-- <script>
-        $(document).ready(function () {
-        //change selectboxes to selectize mode to be searchable
-        $("select").select2();
-        });
-    </script> --}}
+ 
 @endpush
 @endsection

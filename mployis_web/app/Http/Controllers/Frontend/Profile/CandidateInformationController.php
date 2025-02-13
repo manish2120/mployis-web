@@ -37,7 +37,6 @@ class CandidateInformationController extends Controller
 
         // Handle profile picture upload
         $profilePicturePath = null;
-        $profilePicturePath = null;
 
         if ($request->hasFile('profile_picture')) {
             $file = $request->file('profile_picture'); // Get the file from the request

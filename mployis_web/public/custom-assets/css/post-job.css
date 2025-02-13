@@ -1,0 +1,32 @@
+.company-card {
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 10px;
+  transition: box-shadow 0.3s;
+  background-color: #fff;
+}
+
+.company-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.badge-status {
+  float: right;
+  background-color: #28a745;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.company-card .btn {
+  background-color: #28a745;
+  color: #fff;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.company-card .location,
+.company-card .designation {
+  font-size: 14px;
+  color: #666;
+}

@@ -16,17 +16,38 @@ class PassUserId
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::guard('candidate')->check()) {
+        if (Auth::guard('candidate')->check()) {
             $candidateId = Auth::guard('candidate')->id();
 
-             if (!$request->route('candidate_id') || $request->route('candidate_id') != $candidateId) {
-            // Append the correct candidate_id to the route and redirect
-            return redirect()->route($request->route()->getName(), ['candidate_id' => $candidateId]);
+            // Check if the route has a candidate_id and if it matches the logged-in user
+            if (!$request->route('candidate_id') || $request->route('candidate_id') != $candidateId) {
+                // Redirect with correct candidate_id
+                return redirect()->route(
+                    $request->route()->getName(), 
+                    array_merge($request->route()->parameters(), ['candidate_id' => $candidateId])
+                );
+            }
+
+            // Inject the correct candidate_id into the route parameters
+            $request->route()->setParameter('candidate_id', $candidateId);
         }
 
-            // Adds the user id to the request data
-            $request->merge(['candidate_id' => $candidateId]);
+        if (Auth::guard('company')->check()) {
+            $companyId = Auth::guard('company')->id();
+
+            // Check if the route has a company_id and if it matches the logged-in user
+            if (!$request->route('company_id') || $request->route('company_id') != $companyId) {
+                // Redirect with correct company_id
+                return redirect()->route(
+                    $request->route()->getName(), 
+                    array_merge($request->route()->parameters(), ['company_id' => $companyId])
+                );
+            }
+
+            // Inject the correct company_id into the route parameters
+            $request->route()->setParameter('company_id', $companyId);
         }
+
         return $next($request);
     }
 }

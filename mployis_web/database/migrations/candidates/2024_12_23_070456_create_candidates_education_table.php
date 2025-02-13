@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('candidates_education_twelfth_grade', function (Blueprint $table) {
+        Schema::create('candidates_education', function (Blueprint $table) {
             $table->id();
             $table->foreignId('candidates_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('college_name');
+            $table->foreignId('education_level_id')->constrained('education_levels')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('school_or_college');
             $table->string('board_name');
             $table->string('grade_or_percentage');
             $table->string('year_of_passing');
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('candidates_education_twelfth_grade');
+        Schema::dropIfExists('candidates_education');
     }
 };

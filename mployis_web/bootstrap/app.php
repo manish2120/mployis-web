@@ -18,6 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'candidate_auth' => RedirectIfNotAuthenticated::class,
             'candidate_page_auth' => RedirectIfAuthenticated::class,
             'candidate_id' => PassUserId::class,
+            'company_id' => PassUserId::class,
+            'company_auth' => RedirectIfNotAuthenticated::class,
+            'company_page_auth' => RedirectIfAuthenticated::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -23,6 +23,7 @@
 <!--end::Fonts-->
 
 <!--begin::Global Stylesheets Bundle(used by all pages)-->
+@vite(['../../../../resources/css/app.css'])
 <link href="{{ asset('frontend/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('frontend/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('frontend/assets/css/style.header.css') }}" rel="stylesheet" type="text/css" />

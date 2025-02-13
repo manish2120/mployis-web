@@ -20,7 +20,7 @@
                     </div>
                     <!--end::Curve top-->
                     <!--begin::Wrapper-->
-                    <div class="py-20 landing-dark-bg">
+                    <div class="py-10 landing-dark-bg">
                         <!--begin::Container-->
                         <div class="container">
                             <!--begin::Plans-->

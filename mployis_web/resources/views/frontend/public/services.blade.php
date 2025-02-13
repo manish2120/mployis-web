@@ -227,14 +227,11 @@
    <!--begin::Wrapper-->
    {{-- <div class="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg" style="background-image: url(assets/media/svg/illustrations/landing.svg)"> --}}
    
-<div class="d-flex flex-column flex-root">
+<div class="flex flex-column flex-root">
    <div class="mb-0" id="home">
       <!--begin::Wrapper-->
-
-      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
       <section class="section-big main-color">
          <div class="container">
-      
             <div class="row">
                <div class="col-md-12 pb-20 text-center"> 
                   <h2 class="section-title mb-10"><span> Our <strong class="primary-color"></strong> Services </span></h2>
@@ -253,10 +250,10 @@
                <div class="col-md-4">
                   <ul class="i-list medium">
                      <li class="i-list-item">
-                        <div class="icon"> <i class="fa fa-desktop"></i> </div>
+                        <div class="icon"> <i class="fa fa-desktop" style="font-size: 2rem"></i> </div>
       
                         <div class="icon-content">
-                           <h3 class="title text-white">high-level specialists working</h3>
+                           <h3 class="title text-white">High-level specialists working</h3>
                            <p class="sub-title">
                            Here you can find high-level specialists working in the financial and IT sector. Mployis allows you to run cheap, optimized ads on Mployis to hire people for internships.
                            </p>
@@ -264,10 +261,10 @@
                         <div class="iconlist-timeline"></div>
                      </li>
                      <li class="i-list-item">
-                        <div class="icon"> <i class="fa fa-code"></i> </div>
+                        <div class="icon"> <i class="fa-solid fa-building-user" style="color: #ffffff; font-size: 2rem;"></i> </div>
       
                         <div class="icon-content">
-                           <h3 class="title text-white">best job posting portals in India</h3>
+                           <h3 class="title text-white">Best job posting portals in India</h3>
                            <p>
                            Mployis, one of the best job posting portals in India, allows you to post jobs quickly and within no time. With Mployis, you can access top talent in more than 20 countries, including India. It provides you with the best and most highly-qualified talent at your fingertips. 
                            </p>
@@ -275,7 +272,7 @@
                         <div class="iconlist-timeline"></div>
                      </li>
                      <li class="i-list-item">
-                        <div class="icon"> <i class="fa fa-paper-plane"></i> </div>
+                        <div class="icon"> <i class="fa fa-paper-plane" style="font-size: 2rem"></i> </div>
       
                         <div class="icon-content">
                            <h3 class="title text-white">For Interns or student employees</h3>
@@ -289,7 +286,7 @@
                <div class="col-md-4">
                   <ul class="i-list medium">
                      <li class="i-list-item">
-                        <div class="icon"> <i class="fa fa-diamond"></i> </div>
+                        <div class="icon"> <i class="fa-regular fa-gem" style="color: #ffffff; font-size: 2rem;"></i> </div>
                         <div class="icon-content">
                            <h3 class="title text-white">Endless Possibilites</h3>
                            <p class="sub-title">
@@ -299,7 +296,7 @@
                         <div class="iconlist-timeline"></div>
                      </li>
                      <li class="i-list-item">
-                        <div class="icon"> <i class="fa fa-recycle"></i> </div>
+                        <div class="icon"> <i class="fa fa-recycle" style="font-size: 2rem"></i> </div>
                         <div class="icon-content">
                            <h3 class="title text-white">Free Lifetime Updates</h3>
                            <p>
@@ -309,7 +306,7 @@
                         <div class="iconlist-timeline"></div>
                      </li>
                      <li class="i-list-item">
-                        <div class="icon"> <i class="fa fa-check"></i> </div>
+                        <div class="icon"> <i class="fa fa-check" style="font-size: 2rem"></i> </div>
                         <div class="icon-content">
                            <h3 class="title text-white">Job seekers worldwide</h3>
                            <p>
@@ -322,7 +319,7 @@
                <div class="col-md-4">
                   <ul class="i-list medium">
                      <li class="i-list-item">
-                        <div class="icon"> <i class="fa fa-codepen"></i> </div>
+                        <div class="icon"> <i class="fa-solid fa-sitemap" style="color: #ffffff; font-size: 2rem"></i> </div>
                         <div class="icon-content">
                            <h3 class="title text-white"> Best job websites in India</h3>
                            <p class="sub-title">
@@ -333,7 +330,7 @@
                         <div class="iconlist-timeline"></div>
                      </li>
                      <li class="i-list-item">
-                        <div class="icon"> <i class="fa fa-newspaper-o"></i> </div>
+                        <div class="icon"> <i class="fa-brands fa-uikit" style="color: #ffffff; font-size: 2rem"></i> </div>
                         <div class="icon-content">
                            <h3 class="title text-white">Great user experience</h3>
                            <p>
@@ -343,7 +340,7 @@
                         <div class="iconlist-timeline"></div>
                      </li>
                      <li class="i-list-item">
-                        <div class="icon"> <i class="fa fa-heart-o"></i> </div>
+                        <div class="icon"> <i class="fa-solid fa-heart" style="color: #ffffff; font-size: 2rem"></i> </div>
                         <div class="icon-content">
                            <h3 class="title text-white">Crafted With Love</h3>
                            <p>
@@ -373,4 +370,7 @@
 </div>
 </div>
    <!--end::Main-->
-@endsection
+   @endsection
+   @push('scripts')
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   @endpush

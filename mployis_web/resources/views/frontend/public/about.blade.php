@@ -5,7 +5,7 @@
 <!--begin::Main-->
         <!--begin::How It Works Section-->
         <!--start-->
-        <div class="post d-flex flex-column-fluid" id="kt_post">
+        <div class="post flex flex-column-fluid" id="kt_post">
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
                 <!--begin::About card-->
@@ -89,16 +89,16 @@
                             <!--begin::Body-->
                             <div class="card-body py-15">
                                 <!--begin::Wrapper-->
-                                <div class="d-flex flex-center">
+                                <div class="flex flex-center">
                                     <!--begin::Items-->
-                                    <div class="d-flex justify-content-between mb-10 mx-auto w-xl-900px">
+                                    <div class="flex justify-content-between mb-10 mx-auto w-xl-900px">
                                         <!--begin::Item-->
-                                        <div class="octagon d-flex flex-center h-200px w-200px bg-body mx-2">
+                                        <div class="octagon flex flex-center h-200px w-200px bg-body mx-2">
                                             <!--begin::Content-->
                                             <div class="text-center">
                                                 <!--begin::Symbol-->
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                                                <span class="svg-icon svg-icon-2tx svg-icon-primary">
+                                                <span class="svg-icon svg-icon-2tx svg-icon-primary inline-flex">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                         height="24" viewBox="0 0 24 24" fill="none">
                                                         <rect x="2" y="2" width="9" height="9" rx="2"
@@ -117,7 +117,7 @@
                                                 <div class="mt-1">
                                                     <!--begin::Animation-->
                                                     <div
-                                                        class="fs-lg-2hx fs-2x fw-bolder text-gray-800 d-flex align-items-center">
+                                                        class="fs-lg-2hx fs-2x fw-bolder text-gray-800 flex align-items-center">
                                                         <div class="min-w-70px" data-kt-countup="true"
                                                             data-kt-countup-value="700">0</div>+
                                                     </div>
@@ -132,12 +132,12 @@
                                         </div>
                                         <!--end::Item-->
                                         <!--begin::Item-->
-                                        <div class="octagon d-flex flex-center h-200px w-200px bg-body mx-2">
+                                        <div class="octagon flex flex-center h-200px w-200px bg-body mx-2">
                                             <!--begin::Content-->
                                             <div class="text-center">
                                                 <!--begin::Symbol-->
                                                 <!--begin::Svg Icon | path: icons/duotune/graphs/gra008.svg-->
-                                                <span class="svg-icon svg-icon-2tx svg-icon-success">
+                                                <span class="svg-icon svg-icon-2tx svg-icon-success inline-flex">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                         height="24" viewBox="0 0 24 24" fill="none">
                                                         <path
@@ -157,7 +157,7 @@
                                                 <div class="mt-1">
                                                     <!--begin::Animation-->
                                                     <div
-                                                        class="fs-lg-2hx fs-2x fw-bolder text-gray-800 d-flex align-items-center">
+                                                        class="fs-lg-2hx fs-2x fw-bolder text-gray-800 flex align-items-center">
                                                         <div class="min-w-50px" data-kt-countup="true"
                                                             data-kt-countup-value="80">0</div>K+
                                                     </div>
@@ -172,12 +172,12 @@
                                         </div>
                                         <!--end::Item-->
                                         <!--begin::Item-->
-                                        <div class="octagon d-flex flex-center h-200px w-200px bg-body mx-2">
+                                        <div class="octagon flex flex-center h-200px w-200px bg-body mx-2">
                                             <!--begin::Content-->
                                             <div class="text-center">
                                                 <!--begin::Symbol-->
                                                 <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm002.svg-->
-                                                <span class="svg-icon svg-icon-2tx svg-icon-info">
+                                                <span class="svg-icon svg-icon-2tx svg-icon-info inline-flex">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                         height="24" viewBox="0 0 24 24" fill="none">
                                                         <path
@@ -197,7 +197,7 @@
                                                 <div class="mt-1">
                                                     <!--begin::Animation-->
                                                     <div
-                                                        class="fs-lg-2hx fs-2x fw-bolder text-gray-800 d-flex align-items-center">
+                                                        class="fs-lg-2hx fs-2x fw-bolder text-gray-800 flex align-items-center">
                                                         <div class="min-w-50px" data-kt-countup="true"
                                                             data-kt-countup-value="35">0</div>M+
                                                     </div>
@@ -226,9 +226,7 @@
                                 <!--end::Testimonial-->
                                 <!--begin::Author-->
                                 <div class="fs-2 fw-bold text-muted text-center">
-                                    <a href="../../demo1/dist/account/security.html"
-                                        class="link-primary fs-4 fw-bolder">Marcus Levy</a>
-                                    <span class="fs-4 fw-bolder text-gray-600">,KeenThemes CEO</span>
+                                    <b>Marcus Levy</b>
                                 </div>
                                 <!--end::Author-->
                             </div>
@@ -428,15 +426,14 @@
                                     <!--begin::Item-->
                                     <div class="text-center">
                                         <!--begin::Photo-->
-                                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                        <div class="octagon mx-auto mb-5 flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                                             style="background-image:url('{{ url('frontend/assets/media/avatars/300-1.jpg') }}')">
                                         </div>
                                         <!--end::Photo-->
                                         <!--begin::Person-->
                                         <div class="mb-0">
                                             <!--begin::Name-->
-                                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-3">Paul
-                                                Miles</a>
+                                            <b class="fs-2">Paul Miles</b>
                                             <!--end::Name-->
                                             <!--begin::Position-->
                                             <div class="text-muted fs-6 fw-bold mt-1">Development Lead</div>
@@ -448,15 +445,14 @@
                                     <!--begin::Item-->
                                     <div class="text-center">
                                         <!--begin::Photo-->
-                                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                        <div class="octagon mx-auto mb-5 flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                                             style="background-image:url('{{ url('frontend/assets/media/avatars/300-2.jpg') }}')">
                                         </div>
                                         <!--end::Photo-->
                                         <!--begin::Person-->
                                         <div class="mb-0">
                                             <!--begin::Name-->
-                                            <a href="#"
-                                                class="text-dark fw-bolder text-hover-primary fs-3">Melisa Marcus</a>
+                                            <b class="fs-2">Melisa Marcus</b>
                                             <!--end::Name-->
                                             <!--begin::Position-->
                                             <div class="text-muted fs-6 fw-bold mt-1">Creative Director</div>
@@ -468,15 +464,14 @@
                                     <!--begin::Item-->
                                     <div class="text-center">
                                         <!--begin::Photo-->
-                                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                        <div class="octagon mx-auto mb-5 flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                                             style="background-image:url('{{ url('frontend/assets/media/avatars/300-5.jpg') }}')">
                                         </div>
                                         <!--end::Photo-->
                                         <!--begin::Person-->
                                         <div class="mb-0">
                                             <!--begin::Name-->
-                                            <a href="#"
-                                                class="text-dark fw-bolder text-hover-primary fs-3">David Nilson</a>
+                                            <b class="fs-2">David Nilson</b>
                                             <!--end::Name-->
                                             <!--begin::Position-->
                                             <div class="text-muted fs-6 fw-bold mt-1">Python Expert</div>
@@ -488,15 +483,14 @@
                                     <!--begin::Item-->
                                     <div class="text-center">
                                         <!--begin::Photo-->
-                                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                        <div class="octagon mx-auto mb-5 flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                                             style="background-image:url('{{ url('frontend/assets/media/avatars/300-20.jpg') }}')">
                                         </div>
                                         <!--end::Photo-->
                                         <!--begin::Person-->
                                         <div class="mb-0">
                                             <!--begin::Name-->
-                                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-3">Anne
-                                                Clarc</a>
+                                            <b class="fs-2">Anne Clarc</b>
                                             <!--end::Name-->
                                             <!--begin::Position-->
                                             <div class="text-muted fs-6 fw-bold mt-1">Project Manager</div>
@@ -508,15 +502,14 @@
                                     <!--begin::Item-->
                                     <div class="text-center">
                                         <!--begin::Photo-->
-                                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                        <div class="octagon mx-auto mb-5 flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                                             style="background-image:url('{{ url('frontend/assets/media/avatars/300-23.jpg') }}')">
                                         </div>
                                         <!--end::Photo-->
                                         <!--begin::Person-->
                                         <div class="mb-0">
                                             <!--begin::Name-->
-                                            <a href="#"
-                                                class="text-dark fw-bolder text-hover-primary fs-3">Ricky Hunt</a>
+                                            <b class="fs-2">Ricky Hunt</b>
                                             <!--end::Name-->
                                             <!--begin::Position-->
                                             <div class="text-muted fs-6 fw-bold mt-1">Art Director</div>
@@ -528,15 +521,14 @@
                                     <!--begin::Item-->
                                     <div class="text-center">
                                         <!--begin::Photo-->
-                                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                        <div class="octagon mx-auto mb-5 flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                                             style="background-image:url('{{ url('frontend/assets/media/avatars/300-12.jpg') }}')">
                                         </div>
                                         <!--end::Photo-->
                                         <!--begin::Person-->
                                         <div class="mb-0">
                                             <!--begin::Name-->
-                                            <a href="#"
-                                                class="text-dark fw-bolder text-hover-primary fs-3">Alice Wayde</a>
+                                            <b class="fs-2">Alice Wayde</b>
                                             <!--end::Name-->
                                             <!--begin::Position-->
                                             <div class="text-muted fs-6 fw-bold mt-1">Marketing Manager</div>
@@ -548,15 +540,14 @@
                                     <!--begin::Item-->
                                     <div class="text-center">
                                         <!--begin::Photo-->
-                                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                        <div class="octagon mx-auto mb-5 flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                                             style="background-image:url('{{ url('frontend/assets/media/avatars/300-9.jpg') }}')">
                                         </div>
                                         <!--end::Photo-->
                                         <!--begin::Person-->
                                         <div class="mb-0">
                                             <!--begin::Name-->
-                                            <a href="#"
-                                                class="text-dark fw-bolder text-hover-primary fs-3">Carles Puyol</a>
+                                            <b class="fs-2">Carles Puyol</b>
                                             <!--end::Name-->
                                             <!--begin::Position-->
                                             <div class="text-muted fs-6 fw-bold mt-1">QA Managers</div>
@@ -599,52 +590,7 @@
                             <!--end::Slider-->
                         </div>
                         <!--end::Team-->
-                        <!--begin::Card-->
-                        <div class="card mb-4 bg-light text-center">
-                            <!--begin::Body-->
-                            <div class="card-body py-12">
-                                <!--begin::Icon-->
-                                <a href="https://www.linkedin.com/company/sarvi-solutions/" class="mx-4">
-                                    <img src="{{ url('frontend/assets/media/svg/brand-logos/facebook-4.svg') }}"
-                                        class="h-30px my-2" alt="" />
-                                </a>
-                                <!--end::Icon-->
-                                <!--begin::Icon-->
-                                <a href="https://www.instagram.com/sarvisolutions/" class="mx-4">
-                                    <img src="{{ url('frontend/assets/media/svg/brand-logos/instagram-2-1.svg') }}"
-                                        class="h-30px my-2" alt="" />
-                                </a>
-                                <!--end::Icon-->
-                                <!--begin::Icon-->
-                                <a href="https://github.com/SarviSolutions/" class="mx-4">
-                                    <img src="{{ url('frontend/assets/media/svg/brand-logos/github.svg') }}"
-                                        class="h-30px my-2" alt="" />
-                                </a>
-                                <!--end::Icon-->
-                                <!--begin::Icon-->
-                                {{-- <a href="#" class="mx-4">
-                                                <img src="{{ url('frontend/assets/media/svg/brand-logos/behance.svg')}}" class="h-30px my-2" alt="" />
-                                            </a> --}}
-                                <!--end::Icon-->
-                                <!--begin::Icon-->
-                                {{-- <a href="https://www.linkedin.com/company/sarvi-solutions/" class="mx-4">
-                                                <img src="{{ url('frontend/assets/media/svg/brand-logos/pinterest-p.svg')}}" class="h-30px my-2" alt="" />
-                                            </a> --}}
-                                <!--end::Icon-->
-                                <!--begin::Icon-->
-                                {{-- <a href="#" class="mx-4">
-                                                <img src="{{ url('frontend/assets/media/svg/brand-logos/twitter.svg')}}" class="h-30px my-2" alt="" />
-                                            </a> --}}
-                                <!--end::Icon-->
-                                <!--begin::Icon-->
-                                {{-- <a href="#" class="mx-4">
-                                                <img src="{{url('frontend/assets/media/svg/brand-logos/dribbble-icon-1.svg')}}" class="h-30px my-2" alt="" />
-                                            </a> --}}
-                                <!--end::Icon-->
-                            </div>
-                            <!--end::Body-->
-                        </div>
-                        <!--end::Card-->
+
                     </div>
                     <!--end::Body-->
                 </div>

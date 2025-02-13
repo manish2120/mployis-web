@@ -5,20 +5,25 @@ namespace App\Models\Frontend\Profile;
 use App\Models\Auth\User;
 use Illuminate\Database\Eloquent\Model;
 
-class TenthGradeEducation extends Model
+class CandidateEducation extends Model
 {
-  protected $table =  'candidates_education_tenth_grade';
+  protected $table =  'candidates_education';
 
   protected $fillable = [
     'candidates_id',
-    'school_name',
+    'education_level_id',
+    'school_or_college',
     'board_name',
     'grade_or_percentage',
     'year_of_passing',
-    'passing_certificate'
+    'passing_certificate',
   ];
 
   public function candidatesData() {
     return $this->belongsTo(User::class, 'candidates_id');
+  }
+
+  public function educationLevel() {
+    return $this->belongsTo(User::class, 'education_level');
   }
 }

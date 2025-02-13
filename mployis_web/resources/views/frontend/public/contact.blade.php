@@ -102,7 +102,7 @@
                     </div>
                     <!--end::Row-->
                     <!--begin::Row-->
-                    <div class="row g-5 mb-5 mb-lg-15">
+                    <div class="row g-5 mb-5 mb-lg-15 justify-center">
                         <!--begin::Col-->
                         {{-- <div class="col-sm-6 pe-lg-10">
                                             <!--begin::Phone-->
@@ -127,7 +127,7 @@
                                 class="text-center bg-light card-rounded d-flex flex-column justify-content-center p-10 h-100">
                                 <!--begin::Icon-->
                                 <!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
-                                <span class="svg-icon svg-icon-3tx svg-icon-primary">
+                                <span class="svg-icon svg-icon-3tx svg-icon-primary inline-flex justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none">
                                         <path opacity="0.3"
@@ -153,55 +153,8 @@
                         <!--end::Col-->
                     </div>
                     <!--end::Row-->
-                    <!--begin::Card-->
-                    <div class="card mb-4 bg-light text-center">
-                        <!--begin::Body-->
-                        <div class="card-body py-12">
-                            <!--begin::Icon-->
-                            <a href="{{ url('https://www.linkedin.com/company/sarvi-solutions/') }}"
-                                class="mx-4">
-                                <img src="{{ asset('frontend/assets/media/svg/brand-logos/facebook-4.svg') }}"
-                                    class="h-30px my-2" alt="" />
-                            </a>
-                            <!--end::Icon-->
-                            <!--begin::Icon-->
-                            <a href="{{ url('https://www.instagram.com/sarvisolutions/') }}" class="mx-4">
-                                <img src="{{ asset('frontend/assets/media/svg/brand-logos/instagram-2-1.svg') }}"
-                                    class="h-30px my-2" alt="" />
-                            </a>
-                            <!--end::Icon-->
-                            <!--begin::Icon-->
-                            <a href="{{ url('https://github.com/SarviSolutions/') }}" class="mx-4">
-                                <img src="{{ asset('frontend/assets/media/svg/brand-logos/github.svg') }}"
-                                    class="h-30px my-2" alt="" />
-                            </a>
-                            <!--end::Icon-->
-                            <!--begin::Icon-->
-                            <a href="{{ url('https://www.linkedin.com/company/sarvi-solutions/') }}"
-                                class="mx-4">
-                                <img src="{{ asset('frontend/assets/media/svg/brand-logos/linkedin.svg') }}"
-                                    class="h-30px my-2" alt="" />
-                            </a>
-                            <!--end::Icon-->
-                            <!--begin::Icon-->
-                            {{-- <a href="#" class="mx-4">
-                                                <img src="{{ asset('frontend/assets/media/svg/brand-logos/pinterest-p.svg')}}" class="h-30px my-2" alt="" />
-                                            </a> --}}
-                            <!--end::Icon-->
-                            <!--begin::Icon-->
-                            {{-- <a href="#" class="mx-4">
-                                                <img src="{{ asset('frontend/assets/media/svg/brand-logos/twitter.svg')}}" class="h-30px my-2" alt="" />
-                                            </a> --}}
-                            <!--end::Icon-->
-                            <!--begin::Icon-->
-                            {{-- <a href="#" class="mx-4">
-                                                <img src="{{ asset('frontend/assets/media/svg/brand-logos/dribbble-icon-1.svg')}}" class="h-30px my-2" alt="" />
-                                            </a> --}}
-                            <!--end::Icon-->
-                    </div>
-                    <!--end::Body-->
                 </div>
-                <!--end::Card-->
+                <!--end::Body-->
             </div>
             <!--end::Body-->
         </div>
