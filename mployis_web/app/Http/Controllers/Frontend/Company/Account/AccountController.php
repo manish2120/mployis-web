@@ -116,7 +116,7 @@ class AccountController extends Controller
             session()->flash('status', 'Logged In Successfully!');
             return response()->json([
                 'status' => true,
-                'redirectURL' => route('home', ['id' => $data->id])
+                'redirectURL' => route('auth.account.company.profile', ['id' => $data->id])
             ]);
         } else {
             return response()->json([

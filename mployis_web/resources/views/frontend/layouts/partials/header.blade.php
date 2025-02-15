@@ -216,8 +216,8 @@
                         Jobs
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="jobBoardsDropdown">
-                        <li><a class="dropdown-item" href="{{ route('auth.account.company.job-board') }}">Job Board</a></li>
-                        <li><a class="dropdown-item" href="{{ route('auth.account.company.company-list') }}">Company List</a></li>
+                        <li><a class="dropdown-item" href="{{ route('company.job-board') }}">Job Board</a></li>
+                        <li><a class="dropdown-item" href="{{ route('company.company-list') }}">Company List</a></li>
                     </ul>
                 </div>
                 <div class="menu-item">

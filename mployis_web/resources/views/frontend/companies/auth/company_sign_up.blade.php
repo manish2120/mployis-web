@@ -222,6 +222,7 @@
         },
         error: function(xhr, response) {
           if(!response) {
+            clearErrors();
             displayStatus(response.status);
           } else if(xhr.status === 422) {
             const errors = xhr.responseJSON?.errors;

@@ -47,8 +47,8 @@ class CompanyProfileController extends Controller
         // Handle profile picture upload
         $profilePicturePath = null;
     
-        if ($request->hasFile('logo')) {
-            $file = $request->file('logo'); // Get the file from the request
+        if ($request->hasFile('logos')) {
+            $file = $request->file('logos'); // Get the file from the request
             $filename = time() . '_' . $file->getClientOriginalName(); // Create a unique file name
             $file->move(public_path('company'), $filename); // Move the file to public/images/logo
             $profilePicturePath = 'company/logos/' . $filename; // Store the relative path

@@ -75,6 +75,12 @@ class PageController extends Controller
         $user = $this->getUserId($company_id);
 
         $postedJob = User::where('id', $user->id)->first();
+        $companyProfile = CompanyProfile::where('company_id', $company_id)->first();
+
+        if(!$companyProfile) {
+            return redirect()->route('auth.account.company.profile', ['company_id' => $user->id]);
+        }
+        
 
         return view('frontend.companies.jobs.post_job', compact('user', 'postedJob'));
     }
@@ -129,19 +135,31 @@ class PageController extends Controller
     // ------------ ENDS::PROFILE ------------
 
     public function displayCompanyList() {
-        $companies = CompanyProfile::get();
+        $companies = CompanyProfile::paginate(1);
         $countryData = [];
         foreach ($companies as $company) {
             $country = Countries::where('country_id', $company->country)->first();
             $countryData = $country; 
         }
 
-        return view('frontend.companies.jobs.company_list',  compact('companies', 'countryData'));
+        return view('frontend.companies.company.company_list',  compact('companies', 'countryData'));
+    }
+
+    public function displayCompanyDetails($companyId) {
+        $companyData = CompanyProfile::where('company_id', $companyId)->first();
+        $jobs = JobPosts::where('company_id', $companyId)->get();
+
+        return view('frontend.companies.company.company_details', compact('companyData', 'jobs'));
     }
 
     public function displayPostedJobs($id = null) {
         $user = $this->getUserId($id);
         $companyPostedJobs = JobPosts::where('company_id', $user->id)->get();
+
+        if(empty($companyPostedJobs)) {
+            return redirect()->route('auth.account.company.profile', ['company_id' => $user->id]);
+        }
+
         return view('frontend.companies.jobs.posted_jobs', compact('companyPostedJobs'));
     }
 

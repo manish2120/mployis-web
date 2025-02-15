@@ -51,8 +51,10 @@ class JobsController extends Controller
             'required_skills' => 'required',
         ]);
 
+        $job_id = $request->job_id;
+
         $loggedInCompanyId = Auth::guard('company')->id();
-        $job = JobPosts::where('company_id', $loggedInCompanyId)->first();
+        $job = JobPosts::where('id', $job_id)->where('company_id', $loggedInCompanyId)->first();
 
         $jobPostData = [
             'job_title' => $request->job_title,
@@ -77,15 +79,29 @@ class JobsController extends Controller
             ]);
         } else {
             return response()->json([
-                'status' => true,
+                'status' => false,
                 'message' => 'Something went wrong!'
             ]);
         }
     }
 
     public function displayJobsBoard(Request $request) {
-        $jobs = JobPosts::with('company')->get();
-
+        $jobs = JobPosts::with('company')->paginate(1);
+    
         return view('frontend.companies.jobs.jobs_board', compact('jobs'));
     }
+
+    public function handleJobSearch(Request $request) {
+        $searchQuery = $request->input('search_job');
+    
+        $jobs = JobPosts::where('job_title', 'like', "%{$searchQuery}%")
+                    ->select('id', 'job_title') // Get only needed fields
+                    ->take(5) // Limit to 5 results
+                    ->get();
+    
+        return response()->json($jobs); // Return JSON response
+    }
+    
+    
+    
 }

@@ -6,12 +6,14 @@
 @endpush
 
 @section('content')
-  @if(Session::has('success'))
-   <p class="alert alert-success">{{Session('success')}}</p>
-  @endif
-
 <div id="kt_content_container" class="container-xxl">
-  <!--begin::Contact-->
+    <div class="status align-items-center fw-bold" role="alert">
+        @if (session('status'))
+            <div class="d-flex justify-content-center fade">{{ session('status') }}</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        @endif
+    </div>
+    <!--begin::Contact-->
   <div class="card">
     <!--begin::Body-->
     <div class="card-body p-lg-17">
@@ -20,12 +22,6 @@
             <!--begin::Col-->
             <div class="col-md-12 pe-lg-10">
                 
-                <div class="status align-items-center fw-bold" role="alert">
-                    @if (session('status'))
-                        <div class="d-flex justify-content-center fade">{{ session('status') }}</div>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    @endif
-                </div>
 
                 <!--begin::Form-->
                 <form id="jobPostForm" class="form mb-15 fv-plugins-bootstrap5 fv-plugins-framework" novalidate>
@@ -226,10 +222,9 @@
 </body>
 <!--end::Body-->
 @push('custom_scripts')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
 <script>
     $(document).ready(function() {
         // JOB POST FORM
@@ -243,7 +238,6 @@
         const company_id = $('#company_id').val();
 
         const postJobUrl = "{{ route('auth.account.company.post-job-form.submit', ['company_id' => ':company_id']) }}".replace(':company_id', company_id);
-        // const postJobUrl = `/post-job/${company_id}/submit`;
 
         $.ajax({
             url: postJobUrl,
@@ -256,6 +250,8 @@
                 if(response.status) {
                     clearValidationErrors(form);
                     displayStatus(response.message);
+                    form.trigger('reset');
+                    form.find('input[type="file"]').val(null); // Extra validation for file inputs if it will be exist in future.
                 }
             },
             error: function(response, xhr) {
@@ -351,7 +347,6 @@
     });
     
             function displayStatus(response) {
-                
                 if (response) {
                     $('.status')
                         .removeClass('alert-danger d-flex')
@@ -384,11 +379,4 @@
 </script>
 
 @endpush
-
 @endsection
-
- {{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> --}}
-
-
-{{-- <script src="{{ asset('frontend/assets/custom/ajax/form-handle.js') }}"></script> --}}

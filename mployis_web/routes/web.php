@@ -87,14 +87,13 @@ Route::prefix('account')->group(function () {
         Route::get('/post-job/{company_id?}', [PageController::class, 'showPostAJobForm'])->name('auth.account.company.post-job-form');
         Route::post('/post-job/{company_id?}/submit', [JobsController::class, 'handleJobPostForm'])->name('auth.account.company.post-job-form.submit');
 
-        Route::get('/jobs/job-board/{company_id?}', [JobsController::class, 'displayJobsBoard'])->name('auth.account.company.job-board');
-
-        Route::get('/jobs/company-list/{company_id?}', [PageController::class, 'displayCompanyList'])->name('auth.account.company.company-list');
-
         Route::get('/jobs/posted-jobs/{company_id?}', [PageController::class, 'displayPostedJobs'])->name('auth.account.company.posted-jobs');
         
+
         Route::get('/jobs/edit-posted-jobs/{company_id?}/{job_id?}', [PageController::class, 'editPostedJobs'])->name('auth.account.company.edit-posted-jobs');
         Route::post('/jobs/edit-posted-jobs/{company_id?}/{job_id?}/update', [JobsController::class, 'editJobPostForm'])->name('auth.account.company.edit-posted-jobs.update');
+
+
     });
     
     Route::get('/company-sign-out', [CompanyAccountController::class, 'handleCompanySignOut'])->name('auth.company-sign-out');
@@ -108,5 +107,12 @@ Route::get('/{id?}', [PageController::class, 'showHomePage'])->name('home');
 Route::get('/countries', [FetchController::class, 'fetchCountries'])->name('countries');
 Route::post('/states', [FetchController::class, 'fetchStates'])->name('states');
 Route::post('/districts', [FetchController::class, 'fetchDistricts'])->name('districts');
+
+Route::get('/jobs/job-board/{company_id?}', [JobsController::class, 'displayJobsBoard'])->name('company.job-board');
+Route::get('/jobs/job-board/search-results', [JobsController::class, 'handleJobSearch'])->name('company.job-board-search');
+
+Route::get('/jobs/company-list/{company_id?}', [PageController::class, 'displayCompanyList'])->name('company.company-list');
+
+Route::get('/jobs/company-details/{company_id?}/{job_id?}', [PageController::class, 'displayCompanyDetails'])->name('company.company-details');
 
 // ===== ENDS::FRONTEND ROUTES =====
